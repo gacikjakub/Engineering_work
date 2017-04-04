@@ -1,0 +1,10 @@
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\SlimDX.dll
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\ServoMonitoring_with_Controll.csprojResolveAssemblyReference.cache
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\ServoMonitoring_with_Controll.csproj.GenerateResource.Cache
+C:\Users\Kuba\Desktop\Licencjat\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\ServoMonitoring_with_Control.Form1.resources

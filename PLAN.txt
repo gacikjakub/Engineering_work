@@ -1,0 +1,7 @@
+Opracowanie i implementacja algorytmu styerowania ramieniem robota
+
+WSTÊP
+
+1. Ogólne przedstawienie problemu
+	1.1 
+	
