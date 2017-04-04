@@ -1,5 +1,3 @@
-ZNOWU NIE DZIAŁA
-
 //Libraries
 #include <Servo.h>
 
