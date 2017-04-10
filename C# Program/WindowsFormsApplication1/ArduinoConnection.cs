@@ -14,19 +14,63 @@ namespace ServoMonitoring_with_Control
         private SerialPort Port;                // Serial Port for communication
         private Boolean ReadStatus;             // Resume or Pause reading data
         private Thread ReadThread;              //  Reading data from device on another thread
+        private String SecretCode;
 
         Form Owner;                             // For modyfying labels and bars in window
 
         //Constructior:
-        public ArduinoConnection(String winport, Form frm)
+        public ArduinoConnection(String code, Form frm)
         {
             Port = new SerialPort();        
             Port.BaudRate = 9600;           // BuadRate in transmission
-            Port.PortName = winport;        // "COM__"
-            Port.Open();                    // Opening Port             TODO:     refactor is required !!!!!!!  
+            int timeout = Port.ReadTimeout;
+            Port.ReadTimeout = 30;
+            SecretCode = code + '\n';
+            string[] ports = SerialPort.GetPortNames();
+            
+            foreach (string port1 in ports)
+            {
+                bool cnt = false;
+                bool br = false;
+                //Console.WriteLine("I am in" + port1);
+                try
+                {
+                    Port = new SerialPort();
+                    Port.BaudRate = 9600;           // BuadRate in transmission
+                    Port.PortName = port1;        // "COM__"
+                    Port.ReadTimeout = 1000;
+                    Port.Open();                    // Opening Port             TODO:     refactor is required !!!!!!!  
+                    Console.WriteLine("Opening port " + Port.PortName);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        code = Port.ReadLine();
+                        Console.WriteLine(code);
+                        if (code != SecretCode)
+                        {
+                            Console.WriteLine("Read from port");
+                            cnt = true;
+                            continue;
+                        }
+                        else
+                        {
+                            Port.WriteLine(SecretCode);
+                            br = true;
+                            break;
+                        }
+                    }
+                    if (cnt) continue;
+                    if (br) break;
+                } catch (Exception)
+                {
+                    Console.WriteLine("Couldn't open port " + Port.PortName);
+                    Port.Close();
+                    continue;
+                }
+            }
             ReadStatus = false;             // Stop reading data on start
             ReadThread = new Thread(new ThreadStart(this.CreateReadThread));        //Initialize the tread
             ReadThread.IsBackground = true;                     // Thread is closing with closing form
+            Port.ReadTimeout = timeout;
             Owner = (Form1) frm;            // set window for showing captured data
         }
 

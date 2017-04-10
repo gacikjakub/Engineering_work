@@ -29,10 +29,10 @@ namespace ServoMonitoring_with_Control
         {
             InitializeComponent();
             ValPerSec = 1000 / NewValInterval;
-            Servo1Que = new CustomQueue(20);
-            Servo2Que = new CustomQueue(20);
+            Servo1Que = new CustomQueue(5);
+            Servo2Que = new CustomQueue(5);
             CountingStatus = false;
-            ArduinoDevice = new ArduinoConnection("COM10", this);
+            ArduinoDevice = new ArduinoConnection("I am GOD", this);
             CountingThread = new Thread(new ThreadStart(this.CreateCountingThread));
             CountingThread.IsBackground = true;
             myJoystick = new JoystickController();

@@ -7,6 +7,7 @@ Servo servo2;
 int counter1 = 0;   // keep quantity of non-overloaded values in succession for servo1
 int counter2 = 0;   // keep quantity of non-overloaded values in succession for servo2
 const int marginOfError = 12;
+const String secretCode = "I am GOD";  // It's a Password for initialize connection with PC
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
@@ -65,12 +66,12 @@ uint16_t do_adc2() {  // set port and measure voltage for servo2
   return diffval2;
 }
 
-void send_diff_value(Servo tempservo) {
-  if (&tempservo == &servo1) {
+void send_diff_value(Servo* tempservo) {
+  if (tempservo == &servo1) {
     Serial.print("D1:");     // every line which started by D1: concern the servo1 and after is sending overloaded value
     Serial.println(diffval1);
   }
-  if (&tempservo == &servo2) {
+  if (tempservo == &servo2) {
     Serial.print("D2:");
     Serial.println(diffval2);
   } 
@@ -90,9 +91,27 @@ void serialEvent() {     //  override function which is running on each end of l
   }
 }
 
+void initialize() {
+  while(!Serial.available()) {
+    Serial.println(secretCode);
+    delay(200);
+  }
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    // add it to the inputString:
+    inputString += inChar;
+    // if the incoming character is a newline, set a flag
+    // so the main loop can do something about it:
+    if (inChar == '\n') {
+      if (inputString != secretCode) initialize();
+    }
+  }
+}
 
 void setup() {
   Serial.begin(9600); // initialize serial communication at 9600 bits per second:
+  initialize();
   initdiff();   // run initialization fucntion
   servo1.attach(2);   // set signal port to servo1 on digital port 2 
   servo2.attach(3);   // set signal port to servo2 on digital port 3 
@@ -114,23 +133,23 @@ void loop() {
    *   so we must assume some margin of error .... here is marginOfError
    */  
   if (diffval1 >marginOfError) {       
-    send_diff_value(servo1);   // sending diffvalue to PC
+    send_diff_value(&servo1);   // sending diffvalue to PC
     counter1 = 0;}   // clear counter when servo is overloaded
     else {
       if (counter1<10) counter1++;    // servo can be non-overloaded to infinity so we can increase this value all time
     }
   if (diffval2 >marginOfError) {
-    send_diff_value(servo2);
+    send_diff_value(&servo2);
     counter2 = 0;    // clear counter when servo is overloaded
     } else {
       if (counter2<10) counter2++;    // servo can be non-overloaded to infinity so we can increase this value all time
     }
             // we send data with non-overloaded value only once time in third loop pattern because sometimes overloaded value are interlaced with small value
-    if (counter1==3) {
-      send_diff_value(servo1);   // sending diffvalue to PC
+    if (counter1==4) {
+      send_diff_value(&servo1);   // sending diffvalue to PC
     }
-    if (counter2==3) {
-      send_diff_value(servo2);   // sending diffvalue to PC
+    if (counter2==4) {
+      send_diff_value(&servo2);   // sending diffvalue to PC
     }
       delay(20);   //limit frequency of measurments
 }
