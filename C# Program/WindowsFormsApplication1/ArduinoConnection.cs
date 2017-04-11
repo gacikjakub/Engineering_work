@@ -19,15 +19,16 @@ namespace ServoMonitoring_with_Control
         Form Owner;                             // For modyfying labels and bars in window
 
         //Constructior:
-        public ArduinoConnection(String code, Form frm)
+        public ArduinoConnection(String  code, Form frm)
         {
             Owner = (Form1)frm;            // set window for showing captured data
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+            Application.ApplicationExit += new EventHandler(OnProcessExit);
+            Owner.FormClosing += OnProcessExit;
             Port = new SerialPort();        
             Port.BaudRate = 9600;           // BuadRate in transmission
             int timeout = Port.ReadTimeout;
             Port.ReadTimeout = 30;
-            SecretCode = code;
+            SecretCode = code + '\r';
             string[] ports = SerialPort.GetPortNames();
             bool cnt = false;
             bool br = false;
@@ -40,15 +41,19 @@ namespace ServoMonitoring_with_Control
                     Port.BaudRate = 9600;           // BuadRate in transmission
                     Port.PortName = port1;        // "COM__"
                     Port.ReadTimeout = 1000;
-                    Port.Open();                    // Opening Port             TODO:     refactor is required !!!!!!!  
+                    Port.Open();                    // Opening Port             
                     Console.WriteLine("Opening port " + Port.PortName);
                     for (int i = 0; i < 2; i++)
                     {
-                        code = Port.ReadLine();
-                        Console.WriteLine(code);
-                        Console.WriteLine(SecretCode);
+                        String receivedCode = Port.ReadLine();
+                        byte[] code1 = Encoding.ASCII.GetBytes(receivedCode);
+                        byte[] code2 = Encoding.ASCII.GetBytes(SecretCode);
+                        foreach (byte n in code1) Console.Write(n); Console.WriteLine();
+                        foreach (byte n in code2) Console.Write(n); Console.WriteLine();
+                        //Console.WriteLine(code1);
+                        //Console.WriteLine(code2);
                         Console.WriteLine();
-                        if (!(code.Equals(SecretCode)))
+                        if (!(receivedCode.Equals(SecretCode)))
                         {
                             Console.WriteLine("Read from port");
                             cnt = true;
@@ -56,6 +61,7 @@ namespace ServoMonitoring_with_Control
                         }
                         else
                         {
+                            SecretCode = code + '\n';
                             Port.WriteLine(SecretCode);
                             cnt = false;
                             br = true;
@@ -88,17 +94,25 @@ namespace ServoMonitoring_with_Control
                            //MessageBoxIcon.Information  // for Information
                            //MessageBoxIcon.Question // for Question
                     );
-                Owner.Close();
+                                                                // Sequence of procedures is important
+                System.Environment.Exit(Environment.ExitCode);          // First of all Envronment Exit - it terminates all threads
+                Application.ExitThread();
                 Application.Exit();
+                Owner.Close();
             }
         }
 
-        void OnProcessExit(object sender, EventArgs e)
+        private void OnProcessExit(object sender, EventArgs e)
         {
             try
             {
                 Port.WriteLine("Exit");
-                Port.Close(); 
+                System.Environment.Exit(Environment.ExitCode);
+                Application.ExitThread();
+                Application.Exit();
+                Owner.Close();
+                Port.Close();
+                
             } 
             catch (Exception)
             {
