@@ -21,17 +21,18 @@ namespace ServoMonitoring_with_Control
         //Constructior:
         public ArduinoConnection(String code, Form frm)
         {
+            Owner = (Form1)frm;            // set window for showing captured data
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             Port = new SerialPort();        
             Port.BaudRate = 9600;           // BuadRate in transmission
             int timeout = Port.ReadTimeout;
             Port.ReadTimeout = 30;
-            SecretCode = code + '\n';
+            SecretCode = code;
             string[] ports = SerialPort.GetPortNames();
-            
+            bool cnt = false;
+            bool br = false;
             foreach (string port1 in ports)
             {
-                bool cnt = false;
-                bool br = false;
                 //Console.WriteLine("I am in" + port1);
                 try
                 {
@@ -45,7 +46,9 @@ namespace ServoMonitoring_with_Control
                     {
                         code = Port.ReadLine();
                         Console.WriteLine(code);
-                        if (code != SecretCode)
+                        Console.WriteLine(SecretCode);
+                        Console.WriteLine();
+                        if (!(code.Equals(SecretCode)))
                         {
                             Console.WriteLine("Read from port");
                             cnt = true;
@@ -54,6 +57,7 @@ namespace ServoMonitoring_with_Control
                         else
                         {
                             Port.WriteLine(SecretCode);
+                            cnt = false;
                             br = true;
                             break;
                         }
@@ -67,11 +71,39 @@ namespace ServoMonitoring_with_Control
                     continue;
                 }
             }
-            ReadStatus = false;             // Stop reading data on start
-            ReadThread = new Thread(new ThreadStart(this.CreateReadThread));        //Initialize the tread
-            ReadThread.IsBackground = true;                     // Thread is closing with closing form
-            Port.ReadTimeout = timeout;
-            Owner = (Form1) frm;            // set window for showing captured data
+            if (br)
+            {
+                ReadStatus = false;             // Stop reading data on start
+                ReadThread = new Thread(new ThreadStart(this.CreateReadThread));        //Initialize the tread
+                ReadThread.IsBackground = true;                     // Thread is closing with closing form
+                Port.ReadTimeout = timeout;
+                
+            } else
+            {
+                MessageBox.Show("Device couldn't pair with PC",
+                                "Device Error",
+                                MessageBoxButtons.OK,
+                               // MessageBoxIcon.Warning // for Warning  
+                               MessageBoxIcon.Error // for Error 
+                           //MessageBoxIcon.Information  // for Information
+                           //MessageBoxIcon.Question // for Question
+                    );
+                Owner.Close();
+                Application.Exit();
+            }
+        }
+
+        void OnProcessExit(object sender, EventArgs e)
+        {
+            try
+            {
+                Port.WriteLine("Exit");
+                Port.Close(); 
+            } 
+            catch (Exception)
+            {
+
+            }
         }
 
         private void CreateReadThread ()            // Thread to capturing darta

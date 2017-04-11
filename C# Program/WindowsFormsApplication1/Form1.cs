@@ -32,7 +32,7 @@ namespace ServoMonitoring_with_Control
             Servo1Que = new CustomQueue(5);
             Servo2Que = new CustomQueue(5);
             CountingStatus = false;
-            ArduinoDevice = new ArduinoConnection("I am GOD", this);
+            ArduinoDevice = new ArduinoConnection("I am GOD \n", this);
             CountingThread = new Thread(new ThreadStart(this.CreateCountingThread));
             CountingThread.IsBackground = true;
             myJoystick = new JoystickController();

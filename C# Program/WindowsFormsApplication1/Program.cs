@@ -14,9 +14,16 @@ namespace ServoMonitoring_with_Control
         [STAThread]
         static void Main()
         {
-           // Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            try
+            {
+                // Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1());
+            }
+            catch (System.ObjectDisposedException)
+            {
+
+            }
         }
     }
 }

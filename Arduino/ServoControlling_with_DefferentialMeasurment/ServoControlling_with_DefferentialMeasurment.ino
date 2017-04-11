@@ -8,6 +8,7 @@ int counter1 = 0;   // keep quantity of non-overloaded values in succession for 
 int counter2 = 0;   // keep quantity of non-overloaded values in succession for servo2
 const int marginOfError = 12;
 const String secretCode = "I am GOD";  // It's a Password for initialize connection with PC
+int InitI = 0;
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
@@ -42,8 +43,10 @@ uint16_t do_adc1() {    // set port and measure voltage for servo1
   return diffval1;
 }
 
-void setServo_measure() {         //set servo based on incoming data
+bool setServo_measure(){         //set servo based on incoming data
+  bool res = false;
   if(inputString.startsWith("S1:")) {   // every line which is started by S1: concern servo1 
+        res = true;
         adc1();
         inputString.remove(0,3);        //removing "S1:"  to get only value
         delay(1);
@@ -51,12 +54,25 @@ void setServo_measure() {         //set servo based on incoming data
         diffval1 = do_adc();
       } else
        if(inputString.startsWith("S2:")) {    // every line which is started by S2: concern servo2 
+        res = true;
         adc2();
         inputString.remove(0,3);          //removing "S2:"  to get only value
         delay(1);
         servo2.write(inputString.toInt());
         diffval2 = do_adc();
       }
+  return res;      
+}
+
+bool setInitializeMode() {    // go to initialize()
+  bool res = false;
+  if (inputString.equals("Exit")) {
+    res = true;
+    servo1.detach();
+    servo2.detach();
+    setup();
+  }
+  return res;
 }
 
 uint16_t do_adc2() {  // set port and measure voltage for servo2
@@ -82,36 +98,48 @@ void serialEvent() {     //  override function which is running on each end of l
     // get the new byte:
     char inChar = (char)Serial.read();
     // add it to the inputString:
-    inputString += inChar;
+    
     // if the incoming character is a newline, set a flag
     // so the main loop can do something about it:
     if (inChar == '\n') {
       stringComplete = true;
-    }
+    } else inputString += inChar;
   }
 }
 
 void initialize() {
+  InitI ++;
   while(!Serial.available()) {
     Serial.println(secretCode);
     delay(200);
   }
+  inputString = "";
   while (Serial.available()) {
     // get the new byte:
     char inChar = (char)Serial.read();
     // add it to the inputString:
-    inputString += inChar;
+    
     // if the incoming character is a newline, set a flag
     // so the main loop can do something about it:
     if (inChar == '\n') {
-      if (inputString != secretCode) initialize();
-    }
+      stringComplete = true;
+    } else inputString += inChar;
   }
+    if (stringComplete) {    // check if incoming word is complete  (end by \n)
+          if (!(inputString.equals(secretCode))) {
+        inputString = "";
+        Serial.println("IN");
+        stringComplete = false;
+        initialize();
+      }    
+  } else initialize();
+  
 }
 
 void setup() {
   Serial.begin(9600); // initialize serial communication at 9600 bits per second:
   initialize();
+  Serial.println(InitI);
   initdiff();   // run initialization fucntion
   servo1.attach(2);   // set signal port to servo1 on digital port 2 
   servo2.attach(3);   // set signal port to servo2 on digital port 3 
@@ -121,7 +149,7 @@ void setup() {
 void loop() {
   
     if (stringComplete) {    // check if incoming word is complete  (end by \n)
-          setServo_measure();
+          if(!setServo_measure()) setInitializeMode();
         // clear the string:
        inputString = "";
        stringComplete = false;
