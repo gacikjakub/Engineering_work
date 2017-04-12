@@ -22,10 +22,7 @@ namespace ServoMonitoring_with_Control
         int zValue;
         bool[] buttons;
         Thread StateRefresh;
-        Thread Listener;
         bool RefreshingStatus;
-        bool ChangedValues;
-        bool onChangeResume;
         public delegate void onChange();
         private onChange OnChange;
 
@@ -34,28 +31,6 @@ namespace ServoMonitoring_with_Control
         {
             OnChange = oCh;
             
-        }
-
-        private void JoystickListenerThread()
-        {
-            while (true)
-            {
-                while (onChangeResume)
-                {
-                    if (ChangedValues) OnChange();
-                }
-            }
-        }
-
-        public void JoystickListenerStart()
-        {
-            if (!Listener.IsAlive) Listener.Start();
-            this.onChangeResume = true;
-        }
-
-        public void JoystickListenerStop()
-        {
-            this.onChangeResume = false;
         }
 
         public JoystickController()
@@ -69,9 +44,6 @@ namespace ServoMonitoring_with_Control
             state = new JoystickState();
             StateRefresh = new Thread(new ThreadStart(this.RefreshingThread));
             StartRefreshing();
-            Listener = new Thread(new ThreadStart(this.JoystickListenerThread));
-            ChangedValues = false;
-            onChangeResume = false;
         }
 
 
@@ -124,24 +96,27 @@ namespace ServoMonitoring_with_Control
 
         private void RefreshingThread()
         {
-            bool[] oldButtons;      // necessary ??
-            state = choosenStick.GetCurrentState();
-            buttons = state.GetButtons();
-            oldButtons = buttons;
-            while (true)
+            if (Sticks.Length > 0)
             {
-                while (RefreshingStatus)
+                bool[] oldButtons;      // necessary ??
+                state = choosenStick.GetCurrentState();
+                buttons = state.GetButtons();
+                oldButtons = buttons;
+                while (true)
                 {
-                    state = choosenStick.GetCurrentState();
-                    oldButtons = buttons;
-                    xValue = state.X;
-                    yValue = state.Y;
-                    zValue = state.Z;
-                    buttons = state.GetButtons();
-                        
-                    if (Math.Abs(xValue) >10 || Math.Abs(yValue) > 10 || Math.Abs(zValue) > 10)   //|| !(oldButtons.Equals(buttons))
+                    while (RefreshingStatus)
                     {
-                        if (onChangeResume) OnChange();
+                        state = choosenStick.GetCurrentState();
+                        oldButtons = buttons;
+                        xValue = state.X;
+                        yValue = state.Y;
+                        zValue = state.Z;
+                        buttons = state.GetButtons();
+
+                        if (Math.Abs(xValue) > 10 || Math.Abs(yValue) > 10 || Math.Abs(zValue) > 10)   //|| !(oldButtons.Equals(buttons))
+                        {
+                            OnChange();
+                        }
                     }
                 }
             }

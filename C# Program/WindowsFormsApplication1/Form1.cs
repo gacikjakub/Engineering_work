@@ -145,7 +145,6 @@ namespace ServoMonitoring_with_Control
             ArduinoDevice.StartRead();                              // Start reading data from device
             if (!CountingThread.IsAlive) CountingThread.Start();       // Start Counting Thread for capture data
             this.CountingStatus = true;                                 // also
-            myJoystick.JoystickListenerStart();                     // Start reading moves from joystick
         }
 
         private void button2_Click(object sender, EventArgs e)      // Button STOP
