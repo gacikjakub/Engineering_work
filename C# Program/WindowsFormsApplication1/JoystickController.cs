@@ -12,9 +12,8 @@ namespace ServoMonitoring_with_Control
 
     public class JoystickController
     {
-        DirectInput Input;
-        SlimDX.DirectInput.Joystick stick;
-        Joystick[] Sticks;
+        static DirectInput Input;
+        static Joystick[] Sticks;
         JoystickState state;
         Joystick choosenStick;
         int xValue;
@@ -47,8 +46,9 @@ namespace ServoMonitoring_with_Control
         }
 
 
-        public Joystick[] LoadSticks()
+        static public Joystick[] LoadSticks()
         {
+            SlimDX.DirectInput.Joystick stick;
             List<SlimDX.DirectInput.Joystick> sticks = new List<SlimDX.DirectInput.Joystick>();
             foreach (DeviceInstance device in Input.GetDevices(DeviceClass.GameController,DeviceEnumerationFlags.AttachedOnly))
             {
@@ -92,6 +92,15 @@ namespace ServoMonitoring_with_Control
         public bool[] GetButtons()
         {
             return buttons;
+        }
+
+        public Joystick[] GetSticks()
+        {
+            return Sticks;
+        }
+        public Joystick GetStick(int i)
+        {
+            return Sticks[i];
         }
 
         private void RefreshingThread()

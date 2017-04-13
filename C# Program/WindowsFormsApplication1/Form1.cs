@@ -29,14 +29,17 @@ namespace ServoMonitoring_with_Control
         {
             InitializeComponent();
             ValPerSec = 1000 / NewValInterval;
-            Servo1Que = new CustomQueue(5);
-            Servo2Que = new CustomQueue(5);
+            Servo1Que = new CustomQueue(30);
+            Servo2Que = new CustomQueue(30);
             CountingStatus = false;
             ArduinoDevice = new ArduinoConnection("I am GOD", this);
             CountingThread = new Thread(new ThreadStart(this.CreateCountingThread));
             CountingThread.IsBackground = true;
             myJoystick = new JoystickController();
+            SetControllers();
             myJoystick.JoystickListener(onMoveJoystick);
+            CaptureStart();
+            Application.ApplicationExit += new EventHandler(OnProcessExit);
         }
 
         //@Override -- what we want to do when joystick has been moved
@@ -44,7 +47,7 @@ namespace ServoMonitoring_with_Control
         {
             int x = myJoystick.GetX();
             int y = myJoystick.GetY();
-            ArduinoDevice.SetServo(2, Convert.ToInt32(ExtensionMethods.Remap(x, -100, 90, 10, 140))); // maping value and convert to int for sending on arduino
+            ArduinoDevice.SetServo(2, Convert.ToInt32(ExtensionMethods.Remap(x, -100, 90, 140, 10))); // maping value and convert to int for sending on arduino
             SetLabel(label3, x.ToString());                     // show this value in label on window
             ArduinoDevice.SetServo(1, Convert.ToInt32(ExtensionMethods.Remap(y, -100, 100, 10, 140)));
             SetLabel(label8, y.ToString());
@@ -138,19 +141,44 @@ namespace ServoMonitoring_with_Control
             SetLabel(label3, text);
         }
 
+        private void SetControllers()
+        {
+            this.controllerSelector.Items.Add("KEYBOARD");
+            for (int i=0; i< myJoystick.GetSticks().Length; i++)
+            {
+                this.controllerSelector.Items.Add(myJoystick.GetStick(i));
+            }
+            
+        }
 
 
-        private void button1_Click(object sender, EventArgs e)      // Button START
+        private void CaptureStart()
         {
             ArduinoDevice.StartRead();                              // Start reading data from device
             if (!CountingThread.IsAlive) CountingThread.Start();       // Start Counting Thread for capture data
             this.CountingStatus = true;                                 // also
         }
 
-        private void button2_Click(object sender, EventArgs e)      // Button STOP
+        private void CaptureStop()
         {
             ArduinoDevice.StopRead();                               // Stop reading data from device
             this.CountingStatus = false;                            // Pause Counting Thread
+        }
+
+        private void OnProcessExit(object sender, EventArgs e)
+        {
+            CaptureStop();
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)      // Button START
+        {
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)      // Button STOP
+        {
+            
 
         }
 
@@ -191,6 +219,11 @@ namespace ServoMonitoring_with_Control
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
