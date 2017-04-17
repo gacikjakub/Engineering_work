@@ -204,7 +204,7 @@
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(88, 116);
-            this.chart1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -227,7 +227,7 @@
             legend2.Name = "Legend1";
             this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(452, 113);
-            this.chart2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chart2.Margin = new System.Windows.Forms.Padding(2);
             this.chart2.Name = "chart2";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -247,7 +247,7 @@
             this.controllerSelector.Name = "controllerSelector";
             this.controllerSelector.Size = new System.Drawing.Size(167, 21);
             this.controllerSelector.TabIndex = 22;
-            this.controllerSelector.Text = "KEYBOARD";
+            this.controllerSelector.Text = "MOUSE";
             this.controllerSelector.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // Form1

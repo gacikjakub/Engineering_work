@@ -143,7 +143,7 @@ namespace ServoMonitoring_with_Control
 
         private void SetControllers()
         {
-            this.controllerSelector.Items.Add("KEYBOARD");
+            this.controllerSelector.Items.Add("MOUSE");
             for (int i=0; i< myJoystick.GetSticks().Length; i++)
             {
                 this.controllerSelector.Items.Add(myJoystick.GetStick(i));
