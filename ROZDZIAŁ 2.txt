@@ -1,0 +1,58 @@
+3. OPIS WYBRANYCH TECHNOLOGII
+	3.1 CZYM SĄ SERWA ? - ZASADA DZIAŁANIA I ICH SPECYFIKACJA
+	
+		Serwa, a właściwie serwomechanizmy są podstawowymi elementami wykorzystywanymi w modelarstwie. 
+	Dzięki nim możliwe są ruchy różnego typu części składowych modelu pozwalających na sterowanie,
+	na przykład serwa realizują wychylenia osi w modelach pojazdów, co umożliwia ich skręcanie. 
+		Podstawowymi elementami, na które składa się serwo są:
+			- Silnik napędowy sterowany prądem stałym;
+			- Potencjometr
+			- Wewnętrzny układ, który steruje pracą silnika
+			- Przekładnia zębata, pozwalająca uzyskać moc i moment obrotowy 
+		Do sterowania serwami wykorzystywany jest sygnał PWM (Pulse-Width Modulation) - jest to metoda regulacji 
+	prądu o stałej amplitudzie i częstotliwości, natomiast zmianie ulega wypełnienie. Częstotliwość tego sygnału 
+	w serwach analogowych jakim jest SG90 to 50 Hz. W serwach cyfrowych jest to 300 Hz i takie serwa mają większą precyzję.
+	Dzięki tranzystorom wbudowanym w mikrokontroler ATmega oraz funkcją wbudowanym w Arduino wytworzenie takiego sygnału
+	jest bardzo proste - inicjujemy go wartością jednobajtową czyli z zakresu 0-255. Wykorzystując podane wyżej dane
+	łatwo będzie zrozumieć poniższy przykład:
+	Przy częstotliwości 50 Hz wykonywanych jest 50 zmian sygnału w ciągu sekundy, czas trwania sygnału po zmianie to
+	około 20 ms. Sygnał jest inicjowany wartością 128 - około połowy z dostępnego zakresu. W rezultacie na wyjściu zostaje
+	otrzymany cykliczny sygnał, gdzie na przemian w odcinkach 20 ms występuje 5 V i 0 V. 
+	(tu wykres słupkowy napięcia od czasu)
+		Do silnika przymocowany jest potencjometr, który obraca się wraz z obrotem silnika, czyli zmienia się rezystancja
+	prądu - jest to informacja o aktualnym położeniu serwa. Prąd ten trafia do komparatora, gdzie jest porównywany z podanym
+	prądem wzorcowym (sygnałem sterującym). Wytworzony w komparatorze prąd to informacja o różnicy pomiędzy aktualną pozycją
+	silnika, a pozycją zadaną. Ta informacja trafia do korektora, a jego zadaniem jest obrócenie silnika, tak aby zmniejszyć
+	różnicę w pozycjach, aż do uzykania pożadnego efektu.
+	(tu schemat blokowy działania serwa)
+		Serwomechanizmy dzielimy na grupy, a podział ten jest realizowany ze względu na wagę oraz materiały,
+	z których jest wykonane serwo. W opisywanym projekcie serwa jakie są wykorzystywane to SG90 firmy Tower Pro. 
+	Jest to serwo z grupy micro, czyli takie o wadze do 10 gram, a to ma 9 g, oraz o plastikowych przekładniach zębatych. 
+	Inne grupy serw to:
+		- mini - o wadze około 25 g oraz metalowych lub karbonowych przekładni, a tym samym generujące większy moment siły
+		- standard - duże serwa o wadze około 50 g, występują w różnych odmianach, są bardzo silne
+		
+		Dokładna specyfikacja wykorzystywanego serwa Tower Pro SG90 :
+			- Zasilanie: 4.8 V - 6.0V
+			- Zakres ruchu: 180 st
+			- Grupa: micro
+			- Moment 1.8 kg * cm
+			- Prędkość 1.10 s /60st
+			- Rodzaj: analogowe
+			- Wymiary 22x12x27 mm (dł x szer x wys)
+			- Masa: 9 g
+		(tu zdjęcie serwa !)
+	
+	
+	
+	3.2 POMIAR RÓŻNICOWY - NA CZYM POLEGA ? PRZEWAGA NAD INNYMI ROZWIĄZANIAMI
+	
+		W rozdziale 3.1 została opisana zasada ustalania i zmian pozycji serwa, która polega na porównywaniu prądów. 
+	Są to prądy dotyczące pozycji serwa. Niestety samo to rozwiązanie ma pewną wadę - jeśli serwo nie znajdzie się na zadanej
+	pozycji korektor będzie usilnie chciał odpowiednio ustawić silnik. 
+	
+	
+	
+	
+	
+	
