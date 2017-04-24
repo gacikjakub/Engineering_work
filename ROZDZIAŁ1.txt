@@ -17,4 +17,15 @@
 	
 		Do budowy stawów, o których mowa w rodziale 2.1 wykorzystano serwa modelarskie SG90 - jedne 
 	z najbardziej popularnych i łatwo dostępnych serw na rynku, które charakteryzują się również
-	niskimi kosztami.  Pośrednikiem 
+	niskimi kosztami.  Pośrednikiem pomiędzy serwami, a komputerem, który zapewni odpowiednią kontrolę serw 
+	oraz transmisję szeregową będzie płytka prototypowa Arduino Mega, oparta o mikrokontroler ATmega 2560, który 
+	charakteryzuje się zegarem o taktowaniu 16 MHz, 256 kB pamięci Flash oraz 8kB pamięci RAM. Każda płytka z rodziny
+	Arduino posiada 10-cio bitowe przetworniki analogowo-cyfrowe, jednak tylko mikrokontroler w Arduino Mega posiada 
+	wbudowane wzmacniacze różnicowe pozwalające na różnicowy pomiar napięć, co jest podstawą uzyskania sygnału zwrotnego
+	z serw i zabezpieczenia ich przed spaleniem. Opisywana płytka prototypowa posiada złącze USB typu B, które pozwala na
+	podłączenie jej do komputera w celu zaprogramowania oraz zapewnienia transmisji szeregowej, dzięki czemu możemy w czasie 
+	rzeczywistym przesyłać instrukcje sterujące z komputera oraz informacje o przeciążeniach do komputera.
+		Za sterowanie serwami oraz analizę i prezentację informacji o przeciążeniach odpowiada program komputerowy napisyany
+	w języku C#. Jest to obiektowy język programowania zaprojektowany dla firmy Microsoft. Programy napisane w tym języku są 
+	kompilowane do języka CIL (Common Intermediate Language) - jest to kod pośredniczący, który do wykonania wymaga środowiska 
+	uruchomieniowego np .NET Framework. 
