@@ -1,0 +1,20 @@
+2. OGÓLNE PRZEDSTAWIENIE PROBLEMU
+	2.1 BUDOWA RAMIENIA ROBOTA - ZAŁOŻENIA
+	
+		W założeniach omawianego projektu, budowane ramię ma zostać wykorzystane do poruszania się obiektu,
+	czyli do bazy urządzenia zostanie przymocowanych kilka sztuk prezentowanego ramienia oraz zostanie
+	zaimplementowany algorytm synchronizujący ramiona. Projektowane ramię można porównać do odnóża pająka
+	lub ledzkiej ręki bez dłoni - staw zawiasowy pozwalający na ruch przymocowanego dystansu w jednej
+	płaszczyźnie oraz staw kulisty pozwalający na ruch całej konstrukcji w dwóch płaszczyznach. 
+	(tu jakiś model z CADa).
+		Kolejnym założeniem jest możliwość sterowania ramieniem za pomocą aplikacji komputerowej wykorzystując 
+	wybrany kontroler (mysz lub joystick często wykorzystywany w grach) oraz odporność na przeciążenia
+	spowodowane napotkanymi przeszkodami.
+	
+	
+	
+	2.2 DOBÓR PODZESPOŁÓW I TECHNOLOGII
+	
+		Do budowy stawów, o których mowa w rodziale 2.1 wykorzystano serwa modelarskie SG90 - jedne 
+	z najbardziej popularnych i łatwo dostępnych serw na rynku, które charakteryzują się również
+	niskimi kosztami.  Pośrednikiem 
