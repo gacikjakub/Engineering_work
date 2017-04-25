@@ -37,7 +37,7 @@
 			- Zakres ruchu: 180 st
 			- Grupa: micro
 			- Moment 1.8 kg * cm
-			- Prędkość 1.10 s /60st
+			- Prędkość 0.10 s /60st
 			- Rodzaj: analogowe
 			- Wymiary 22x12x27 mm (dł x szer x wys)
 			- Masa: 9 g
@@ -49,7 +49,50 @@
 	
 		W rozdziale 3.1 została opisana zasada ustalania i zmian pozycji serwa, która polega na porównywaniu prądów. 
 	Są to prądy dotyczące pozycji serwa. Niestety samo to rozwiązanie ma pewną wadę - jeśli serwo nie znajdzie się na zadanej
-	pozycji korektor będzie usilnie chciał odpowiednio ustawić silnik. 
+	pozycji korektor będzie usilnie chciał odpowiednio ustawić silnik. Takie działanie będzie prowadzić spalenia silnika lub
+	uszkodzenia przekładni zębatych. Założeniem projektu jest uniknięcie takich sytuacji. Wybranym rozwiązaniem tego problemu
+	jest zastosowanie rezystora bocznikującego oraz wykonywanie różnicowego pomiaru napięcia, które na nim panuje. 
+		Różnicowy pomiar napięcia polega na podłączeniu dwóch bezpośrednich końców badanego elementu do komparatora,
+	a dopiero prąd na wyjściu komparatora trafia do przetwornika ADC (Analog->Digital Converter).
+`	(tu jakiś schemat obrazujący)	
+	Zaletą tego rozwiązania jest odporność na ewentualne szumy, ponieważ przewody połączeniowe są blisko siebie,
+	są tej samej jakości i długości, a więc posiadają ten sam opór oraz zewnętrzne oddziaływania wpływają tak samo na oba przewody,
+	czyli różnica będzie taka sama niezależnie od zaburzeń. 
+	(wykres pomiaru z szumami)
+		Innym możliwym rozwiązaniem problemu jest rozebranie serwa i podłączenie się do sygnału z potencjometru lub komparatora,
+	odpowiednia analiza w mikrokontrolerze i interakcja. Jednak w tym przypadku przeciążenie możemy mierzyć tylko na podstawie
+	pomiaru czasu w jakim serwo się przemieszcza do zadanej pozycji, a logicznym jest że jeśli trwa to zbyt długo to oznacza, że 
+	silnik jest w jakiś sposób blokowany. To rozwiązanie, z pozoru łatwiejsze, ma jednak pewne wady - w pomiarze musi zostać
+	uwzględniona ustalona prędkość serwa co dodatkowo skomplikuje algorytm. Serwa przemieszczają się dość szybko, a przetworniki ADC
+	wbudowane w mikrokontroler mają ograniczaoną szybkość, zwłaszcza kiedy ten sam mikrokontroler musi zapewnić również transmisję
+	szeregową i sterowanie serwem. Ponadto w tym rozwiązaniu nie jest zapewniona odporność na szumy, dlatego wybrane do opisywanego 
+	projektu rozwiązanie polegające na różnicowym pomiarze napięcia wydaje się być jednym z najlepszych.
+	
+	
+	
+	3.3 PRZYGOTOWANY REZYSTOR BOCZNIKUJĄCY - DOBÓR PARAMETRÓW CZĘŚCI
+		
+		Jak opisano w rodziale 3.2 pomiar różnicowy wykonywany jest na elemencie elektronicznym - w tym przypadku jest to 
+	rezystor bocznikujący, czyli rezystor o bardzo małej rezystancji i dużej precyzji przeznaczony do pomiaru dużych prądów i nie 
+	wprowadzający znaczących strat w układzie. Takie rezystory wykorzystywane są we wszelkiego rodzaju miernikach prądu.
+		Na potrzeby projektu powstała płytka z prostym układem umożliwiającym opisywane pomiary. Zastosowano rezystor bocznikujący 
+	o oporze 0.1 Ohm i maksymalnej wydzielanej mocy do 5 W, !!!!!!!!!!!!!!!!!!!!! CZY NA PEWNO W TYM CHODZI O TO 5 W ???????
+	który został podłączony szeregowo z silnikiem - powstał w ten spsoób dzielnik napięcia. W trakcie wykonywania ruchów przez serwo,
+	prąd na rezystorze rośnie. Dodatkowo w układzie zastosowano kondensatory 10 mikroF 63V podłączone równolegle między napięciem
+	a masą, aby .... !!!!! NO WŁAŚNIE - PO CO  ?????
+	(tu schemat płytki)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
 	
 	
 	

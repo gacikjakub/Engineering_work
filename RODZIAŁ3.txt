@@ -1,0 +1,37 @@
+4. PROGRAM DLA MIKROKONTROLERA
+	4.1 ŚRODOWISKO ARDUINO
+	
+		Arduino jest to elektroniczna platforma z otwartym źródłem, która pozwala na proste programowanie wcześniej 
+	przygotowanych mikrokontrolerów. Arduino udostępnia interfejs, który w intuicyjny sposób pozwala wykonywać złożone 
+	opracje na rejestrach ATmegi. Jest to projekt stale rozwijany, posiadający wielu zwolenników, mnóstwo książek do nauki
+	oraz niezliczoną ilość wciąż powstających modułów poszerzających funkcjonalność płytek prototypowych. Na płytce znajduje
+	się programator FTDI, a twórcy udostępniają proste środowisko programistyczne z wbudowanym kompilaotem dzięki czemu 
+	szereg operacji wymaganych przy typowym programowaniu procesorów AVR sprowadza się do napisania kodu, podłączenia płytki
+	do portu USB i kliknięcia przycisku 'PROGRAMUJ'. 
+	(logo projektu)
+	
+	
+	
+	4.2 ATMEGA 2560 - WZMACNIACZE RÓŻNICOWE
+		
+		Spośród płytek z rodziny Arduino (m.in Uno, Leonardo, Yum, Nano, Micro, Mega) tylko model Mega posiada mikrokontroler 
+	spełniający wymagania projektu. Jest to mikrokontroler ATmega 2650 posiadający wzmacniacze różnicowe.
+		Przetworniki ADC wbudowane w mikrokontrolery są 10-cio bitowe co oznacza, że zakres otrzymywanych wartości jest
+	z przedziału 0-1023, a mierzony prąd trafiający do przetwornika może być z zakresu 0V - 5V, czyli uzyskany pomiar 
+	ma dokładność +-4.88mV, a w przypadku pomiaru różnicowego jest to +-9.17mV, ponieważ zakres wartości z prztwornika to 
+	-511 - +511, a uwzględniane są tylko pozytywne lub negatywne wartości. 
+	Opór opisanego w rozdziale 3.3 rezystora bocznikującego jest bardzo mały, a to oznacza, że różnica mierzona na nim 
+	również jest niewielka, czyli rozbieżność wartości określająca czy serwo jest w trakcie ruchu czy w spoczynku również 
+	jest znikoma i może być przekłamana przez różne szumy. Tu z pomocą przychodzi wspomniany wzmacniacz różnicowy, który
+	oprócz porównania wejściowych wartości ma możliwość wzmocnienia sygnału o 10 lub 200 razy co oznacza, że powstała z komparatora
+	różnica jest wzmacniania i dopiero ta wartość trafia do 10-bitowego przetwornika czyli dokładność pomiaru, w przypadku 
+	wzmocnienia x200,	wzrasta do +- 24 mikroV w przedziale 0-25 mV.    CHYBA !!!! SPR
+	(dwa wykresy - bez wzmocnienia - praktycznie bez zmian dla małych wartości, oraz ze wzmocnieniem pojawia się strzał)
+	Wyżej opisana operacja powoduje diametralne zwiększenie rozbieżności między wartościami prądów w różncyh stanach
+	pracy serwomechanizmu. 
+	
+	
+	
+	4.3 TRANSMISJA SZEREGOWA ARDUINO <=> PC ORAZ PRZYJĘTY SPOSÓB OZNACZANIA DANYCH
+	
+		
