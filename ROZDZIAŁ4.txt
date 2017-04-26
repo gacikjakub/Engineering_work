@@ -25,7 +25,8 @@
 	wskaźnikową, czyli teoretycznie o nieskończonej pojemności i braku dostępu do konkretnej ilości elemetnów wstecz. Spersonalizowana kolejka posiada konkretnie
 	zdefiniowaną wielkośc co oznacza, że w przypadku przepełnienia kolejki kolejny element nie zostanie bezpośrednio dodany - wcześniej zostanie skasowany 
 	najstarszy element. Średnią arytmetyczną ostanich wartości można obliczyć sumując wartości wszystkich przechowywanych elementów za pomocą funckji foreach
-	oraz podzilić otrzymaną wartośc przez wielkośc zdefiniowanej kolejki. 
+	oraz podzilić otrzymaną wartośc przez wielkość zdefiniowanej kolejki. Wielkość ta jest zależna od szybkości napływania danych z mikrokontrolera oraz 
+	zamierzonej ilości ostanich sekund, z których jest obliczana wspomniana średnia.
 	(tu fragment kodu)
 	
 		Jak opisano w rozdziale 4.3 informacje o przeciążeniach są wysyłane tylko w momnecie występowania przeciażeń czyli wysokich wartości na boczniku, natomiast 
@@ -52,3 +53,13 @@
 	
 	
 	5.4 PREZENTACJA DANYCH
+	
+		Aplikacja komputerowa została napisana wykorzystując środowisko Visual Studio 2015. Jedną z klas wbudowanych w C# oraz narzędziem oferowanych 
+	w Visualowym ToolBoxie jest Chart czyli z języka angielskiego "Wykres". Udostępnia intuicyjny interfejs, w którym wystarczy wybrać typ wykresu,
+	typ splajnu, kolorystykę, agendę, a w trakcie działania programu podawane są wartości od aktualnego czasu i wpisywane w wykres. Dodatkowo za pomocą 
+	wbudowanej w klasę funckji wykres jest przeskalowywany względem osi Y dla lepszej czytelności w przypadku dłuższego pojawiania się podobnych wartości. 
+	(wykresy z programu)
+	
+		Interwał czasowy z jakim wprowadzane są dane do wykresu musi być co co najmniej równy inwerwałowi z jakim przychodzą dane z mikrokontrolera, 
+	a właściwie z jakim dane wpływają do kolejki opisanej w rozdziale 5.2. 
+	
