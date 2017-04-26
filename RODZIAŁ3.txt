@@ -34,4 +34,53 @@
 	
 	4.3 TRANSMISJA SZEREGOWA ARDUINO <=> PC ORAZ PRZYJĘTY SPOSÓB OZNACZANIA DANYCH
 	
+		Transmisja szeregowa polega na szeregowym wysyłaniu i odbieraniu symboli, czyli jeden po drugim. W arduino odbywa się 
+	to za pomocą wbudowanego portu USB.  Zainicjowany w programie BaudRate czyli ilość zmian sygnału w ciągu sekundy 
+	(ilość symboli na sekundę) jest równa ilości bitów przesyłanych na sekundę, ponieważ standard USB 2.0 posługuję się tylko 
+	dwoma stanami 0 i 1 dla odpowiednich napięć   -  SPRAWDŹ TO ŻEBY SIE NIE SPALIĆ ZE WSTYDU
+	Została ustawiona jedna z domyślnych przepustowości i wynosi 9600 bps. 
+	W celu zapewnienia porozumienia między urządzeniami została opracowana pewna konwencja przesyłania informacji. 
+	Przesyłane i odbierane są ciągi znaków, które kolejno są analizowane przez programy na urządzeniach. Informacje są przesyłane
+	tylko podczas wykonywania interakcji tak, aby nie zapełnić buforów w płytce, ponieważ to urządzenie  ma ograniczone zasoby. 
+	W momencie wystąpienia przeciążenia Arduino wysyła sekwencję znaków:  Dn:val , gdzie n jest numerem serwa, a val jest wartością
+	odczytaną za pomocą różnicowego pomiaru na tym właśnie serwie. Arduino odbiera również sygnały sterujące z komputera w postaci:
+	Sn:pos ,  gdzie n jest numerem wybranego serwa, a pos jest pozycją w jakiej sero ma się ustawić i ze względu na ograniczenia, 
+	w postaci plastikowych elementów montażowych wartość ta jest z zakresu 10-140, które oznaczają kąt w st.
+	
+	
+	
+	4.4 BRAK POMIARU RÓŻNICOWEGO W INTERFEJSIE ARDUINO - DZIAŁANIA NA REJESTRACH MIKROKONTROLERA
+	
+		W związku z występowaniem wzmacniaczy różnicowych tylko w modelu Mega, Arduino nie udostępnia w interfejsie funkcji do 
+	łatwego wykonywania takich pomiarów. Rozwiązaniem jest napisanie własnych funkcji, które bezpośrednio ustawiają odpowiednie
+	bity w rejestrach mikrokontrolera, o których można przeczytać w dokumentacji ATmegi 2560. Należy ustawić porty, do których 
+	podłączone są elementy wymagające pomiaru, wartości referencyjne, z którymi sygnał będzie porównywany - tu został ustawiony 
+	na port sygnał z portu zewnętrznego, do którego nic nie jest podłączone, ponieważ istota tkwi w wartościach płynących przez
+	bocznik. 
+		Bity w opisywanych rejestrach są też zmieniane przez miktokontroler, co na przykład oznacza ukończony pomiar,
+	gotowy do odczytu. Zamieszczony niżej fragment kodu zawiera funckje do inicjalizacji i wykonywania różnicowych pomiarów napięcia:
+		void initdiff(){    // definition of initialization function
+			ADCSRA=(1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+			ADMUX = (1<<REFS0) |(0<<REFS1);       // set reference voltage
+			ADMUX |= (1<<MUX3)|(1<<MUX1)|(1<<MUX0);  // set  ports to read voltage (particular)
+		}
+		void adc1() {
+			ADCSRB = (0<<MUX5);    // set read port on A0 and A1
+		}
+		void adc2() {
+			ADCSRB = (1<<MUX5);    // set read port on A8 and A9 ?? 
+		}
+		uint16_t do_adc() {    // defintion of read function
+			ADCSRA |= (1<<ADSC); //Start an ADC conversion by setting the ADSC bit.
+			while(!(ADCSRA & (1<<ADIF)));  //Wait for the conversion to finish. The ADC signals that it's finished
+			ADCSRA|=(1<<ADIF); 
+			return ADC;  //Return the ADC result from the ADC register.
+		};
 		
+		Cały kod dostępny jest w repozytorium na platformie GitHub, do którego kod znajduje się w rozdziale 7. 
+		
+		
+	
+	
+	
+	
