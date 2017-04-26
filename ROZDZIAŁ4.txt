@@ -1,4 +1,54 @@
 5. APLIKACJA KOMPUTEROWA
 	5.1 WYBÓR JĘZYKA PROGRAMOWANIA
 		
+		 Praktycznie każdy z powszechnie znanych języków oprógramowania udostępnia biblioteki lub funkcje wbudowana pozwalające na inicjowanie i komunikację
+	z urządzeniami za pomocą transmisji szeregowej. Mnóstwo języków umożliwia też proste przygotowanie graficznej reprezentacji danych, dlatego pojawia się
+	oczywiste logiczne pytanie: Dlaczego .NET C# ?
+		Składnia progrmau pisanego w środowisku Arduino do złudzenia przypomina składnię C++ - jest to właściwie C++ z dodanymi funkcjami do osbługi
+	mikrokontrolera - dlatego dla zachowania jednolitości i prostego zrozumienia kodu naturalnym byłoby wybranie C++ dla napisania aplikacji kompterowej.
+	Niestety wykorzystane w programie komponenty, a właściwie sposób ich implementacji, jest uzależniony od systemu operacyjnego, a jak już zostało napisane
+	Arduino jest środowiskiem pozwalającym na skompilowanie tego samego kodu niezależnie od systemu. Rozwiązaniem jest wybranie jeżyka wymagającego pośredniej
+	maszyny wirtualnej do uruchomienia programu. Najbardziej znanymi i mocno rozwijanymi językami spełniającymi powyższe wymaganie jest Java i C#, ale to 
+	właśnie ten drugi ma interfejs bardzie zbliżony do C++. 
+	(logo C# .NET)
 	
+	
+	
+	
+	5.2 STRUKTURY UŻYTE W APLIKACJI ORAZ WYKRYWANIE PRZECIĄŻEŃ SERWOMECHANIZMÓW
+		
+		C# jest jeżykiem wysokoobiektowym więc każda użyta struktura jest klasą lub należy do klasy. Napisany program komputerowy zbiera informacje 
+	o aktualnych przeciązeniach serw oraz poddaje je analizie. Otrzymane sygnały są blisko skrajne - dla braku przeciążeń pojawiające się wartości są mniejsze
+	od 10, natomiast w momencie pojawienia się samego ruchu serwa wartości te przekraczają 500. Sposobem wykrycia przeszkody i blokady serwa, a nie samego ruchu 
+	jest zebranie informacji z pewnego odcinka czasu i obliczenie średniej arytmetycznej, ponieważ po wykonaniu ruchu otrzymywane wartości ponownie maleją. 
+	Do zmagazynowania informacji nadchodzących z mikrokontrolera wykorzystano zmodyfikowaną kolejkę - domyślna kolejka zaimlememntowana w C# jest oparta o listę
+	wskaźnikową, czyli teoretycznie o nieskończonej pojemności i braku dostępu do konkretnej ilości elemetnów wstecz. Spersonalizowana kolejka posiada konkretnie
+	zdefiniowaną wielkośc co oznacza, że w przypadku przepełnienia kolejki kolejny element nie zostanie bezpośrednio dodany - wcześniej zostanie skasowany 
+	najstarszy element. Średnią arytmetyczną ostanich wartości można obliczyć sumując wartości wszystkich przechowywanych elementów za pomocą funckji foreach
+	oraz podzilić otrzymaną wartośc przez wielkośc zdefiniowanej kolejki. 
+	(tu fragment kodu)
+	
+		Jak opisano w rozdziale 4.3 informacje o przeciążeniach są wysyłane tylko w momnecie występowania przeciażeń czyli wysokich wartości na boczniku, natomiast 
+	informacje do kolejki w aplikacji komputerowej muszą trafiać stale, dlatego mikrokontroler wysyła też trzecią nieprzeciążoną wartość, a wątek w programie
+	periodycznie kopiuje tą wartość i wstawia do kolejki, a tym samym średnia wartość spada zgodnie z założeniem, nie nadużywając buforów mikrokontrolera.
+	
+	
+	
+	5.3 INICJALIZACJA POŁĄCZENIA I STEROWANIE SERWAMI - PRZYJĘTA KONWENCJA OZNACZANIA DANYCH
+	
+		W programie wykorzystano domyślną bibliotekę do komunikacji szeregowej. Funckje pozwalają w łatwy sposób otworzyć port komunikacyjny, zainicjować
+	połączenie z odpowiednimi parametrami oraz odczytywanie i wysyłanie danych. Jako że to aplikacja sprawdza występowanie przeciążeń na serwach, nie mogą
+	one zostać podłączone jeśli nie zostanie zainicjowanie połączenie z programem. Zostało to zrealizowane w następujący sposób:
+		1. Mikrokontroler po uruchomieniu wysyła periodycznie specjalne hasło "I am GOD", które zostało podane w implementacji. 
+		2. To samo hasło zostało podane w kodzie programu komputerowego - program po otworciu portu sprawdza czy otrzymywany kod zgadza się z podanym w kodzie
+		3. Po zweryfikowaniu urządzenia program wysyła do mikrokontolera swój kod (ten sam), a mikrokontroler porównuje hasło wbudowane i otrzymane. 
+		4. Po zweryfikowaniu kodu, mikrokontroler podłącza serwa - wtedy zaczynają stawiać opór na nacisk.
+		
+	Po zamknięciu aplikacji oraz wykryciu przeciążenia program wysyła do mikrokontrolera polecenie inicjujące odłączenie serw "exit" oraz "break", aby uniknąć ich zniszczenia.
+	Gdy średnia prądów występujących na dzielniku napięcia spadnie poniżej pewnego poziomu zostaje wysłane polecenie "continue", które wymusza ponowne podłączenie serw. 
+	Program wysyła sygnał ustalenie pozycji serw w postaci:
+	Sn:pos ,  gdzie n jest numerem wybranego serwa, a pos jest pozycją z zakresu 10-140 w jakiej sero ma się ustawić.
+	
+	
+	
+	5.4 PREZENTACJA DANYCH
