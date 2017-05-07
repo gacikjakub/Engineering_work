@@ -37,8 +37,7 @@
 		Transmisja szeregowa polega na szeregowym wysyłaniu i odbieraniu symboli, czyli jeden po drugim. W arduino odbywa się 
 	to za pomocą wbudowanego portu USB.  Zainicjowany w programie BaudRate czyli ilość zmian sygnału w ciągu sekundy 
 	(ilość symboli na sekundę) jest równa ilości bitów przesyłanych na sekundę, ponieważ standard USB 2.0 posługuję się tylko 
-	dwoma stanami 0 i 1 dla odpowiednich napięć   -  SPRAWDŹ TO ŻEBY SIE NIE SPALIĆ ZE WSTYDU
-	Została ustawiona jedna z domyślnych przepustowości i wynosi 9600 bps. 
+	dwoma stanami 0 i 1 dla odpowiednich napięć. Została ustawiona jedna z domyślnych przepustowości i wynosi 9600 bps. 
 	W celu zapewnienia porozumienia między urządzeniami została opracowana pewna konwencja przesyłania informacji. 
 	Przesyłane i odbierane są ciągi znaków, które kolejno są analizowane przez programy na urządzeniach. Informacje są przesyłane
 	tylko podczas wykonywania interakcji tak, aby nie zapełnić buforów w płytce, ponieważ to urządzenie  ma ograniczone zasoby. 
@@ -77,7 +76,7 @@
 			return ADC;  //Return the ADC result from the ADC register.
 		};
 		
-		Cały kod dostępny jest w repozytorium na platformie GitHub, do którego kod znajduje się w rozdziale 7. 
+		Cały kod dostępny jest w repozytorium na platformie GitHub, do którego link podano na wstępie pracy. 
 		
 		
 	

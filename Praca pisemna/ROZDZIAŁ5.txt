@@ -1,0 +1,15 @@
+6. PODSUMOWANIE ORAZ PRZYKŁADY WYKORZYSTANIA PROJEKTU
+
+	Technologię wykrywania przeciążeń opisaną w powyższej pracy, przy odpowiednim doborze parametrów części elektronicznych, można zastosować niemal w każdym
+urządzeniu wymagającym takiej kontroli, dlatego ilość zastosowań jest praktycznie nieskończona. Mogą to być nie tylko serwa, ale również standardowe silniki,
+siłowniki, pompy itp. Do najbardziej oczywistych zastosowań prezentowanegp projektu należy system poruszania się i przesuwania przeszkód w eksploratorach
+obszarów czy łazikach pozaziemnskich - poruszanie się na np sześciu kończynach podobnych do tych u pająków jest dużo bardziej odporne na utrudnienia terenu, niż
+koła czy gąsienice. (zdjęcie robo pająka)
+
+Innym przykładem są modele samolotów, w których układ sterowania lotek często realizowany jest za pomocą serwomechanizmów. Silne opory powietrza mogą zniszczyć
+mechanizm, więc za pomocą systemu użytkownik dostanie ostrzeżenie o takiej możliwości i sugestię zaprzestania lotów.
+(zdjęcie samolotu RC)
+
+Prototypy linii montażowych w fabrykach, a właściwie ramion pracujących na linii to również przykład, w którym wymagane jest kontrolowanie sporej ilości serw
+i silników, w przypadku awarii firma poniesie ogromne straty produkcyjne, jak również ucierpieć mogą pracownicy obsługujące maszyny - odpowiedni system może 
+temu przeciwdziałać. Identyczna sytuacja jak i konsekwencje mogą się pojawić w przypadku braku kontroli "łyżek" w koparkach. 

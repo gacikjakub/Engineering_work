@@ -60,6 +60,20 @@
 	wbudowanej w klasę funckji wykres jest przeskalowywany względem osi Y dla lepszej czytelności w przypadku dłuższego pojawiania się podobnych wartości. 
 	(wykresy z programu)
 	
-		Interwał czasowy z jakim wprowadzane są dane do wykresu musi być co co najmniej równy inwerwałowi z jakim przychodzą dane z mikrokontrolera, 
-	a właściwie z jakim dane wpływają do kolejki opisanej w rozdziale 5.2. 
+		Interwał czasowy z jakim wprowadzane są dane do wykresu musi być równy inwerwałowi z jakim przychodzą dane z mikrokontrolera, 
+	a właściwie z jakim dane wpływają do kolejki opisanej w rozdziale 5.2 tak, aby wprowadzane wartości nie dublowały się oraz nie zostały pominięte.
+	(być może fragment kodu)
+	
+	
+		
+	5.5 WYKORZYSTANIE KONTROLERA GIER DO STEROWANIA RAMIENIEM 
+	
+		Do aplikacji zaimplementowano dodatkową funckjonalność jaką jest możliwość sterowania ramieniem robota za pomocą kontrolera do gier.
+	W tym celu wykorzystano otwartoźródłowe API (Application Programming Interface) do DirectX o nazwie SlimDX, które jest przeznaczone głównie do tworzenia gier 
+	pod platformą .NET, ale w tym przypadku posłużyło do oprogramowania kontrolerów do gier. Interfejs, który udostępnia SlimDX jest uniwersalny i implementacja
+	jednego kodu pozwala na używanie różnego typu kontrolerów do gier - joysticków, gamepadów, kierownic itd. Do użycia wystarczy zaledwie podłączyć kontroler
+	do komputera wraz z zainstalowanymi sterownikami do urządzenia, uruchomić aplikację i spośród listy dostępnych urządzeń wybrać to interesujące. 
+	(screen z aplikacji z podkreślniem opcji wyboru)
+	(tu być może oopiszę mój kontroler z małą instrukcją obsługi)
+	
 	
