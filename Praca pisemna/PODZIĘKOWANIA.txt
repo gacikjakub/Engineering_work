@@ -1,9 +1,9 @@
 PODZIĘKOWANIA
 
-	Ponownie zmieniając sposób pisania na pierwszą osobę liczby pojedynczej, pragnę złożyć ogromne wyrazy szacunku i podziękowania dla mojego promotora
-Pana doktora Grzegorza Zuzla, który sprawował pieczę nad moimi poczynaniami w pracy licencjackiej. Sukces ten nie byłby też możliwy bez pozostałych pracowników
+	Zmieniając sposób pisania na pierwszą osobę liczby pojedynczej, pragnę złożyć ogromne wyrazy szacunku i podziękowania dla mojego promotora
+Pana doktora Grzegorza Zuzla, który sprawował pieczę nad moimi poczynaniami w pracy licencjackiej. Twór ten nie byłby też możliwy bez pozostałych pracowników
 Zakładu Doświadczalnej Fizyki Komputerowej z wyszczególnieniem Pana doktora Krzysztofa Pelczara. Cały ten skład zaangażował się w rozwiązywanie napotkanych
-problemów i to właśnie dzięki nim prezentowana praca jest na takim poziomie. Podziękowania należą się również Garażowi Złożoności, który pomimo licznych 
+problemów i to właśnie dzięki nim prezentowana praca została ukończona. Podziękowania należą się również Garażowi Złożoności, który pomimo licznych 
 opracowywanych projektów udostępnił mi opisywany w pracy mikrokontoler oraz (MOŻE) pozwolił mi na wydrukowanie montażowych elementów ramienia za pomocą 
 profesjonalnej drukarki 3D należącej do garażowego asortymentu. 
 	Przez okres ostatnich trzech lat dane mi było posiąść naprawdę ogromną wiedzę, dlatego dziękuję wszystkim pracownikom wydziału, a zwłaszcza tym,

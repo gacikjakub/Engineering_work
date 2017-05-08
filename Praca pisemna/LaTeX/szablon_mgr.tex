@@ -4,7 +4,16 @@
 \usepackage{amssymb} % To pakiet z dodatkowymi symbolami matematycznymi
 \usepackage{polski} \usepackage[cp1250]{inputenc} % Te pakiety umo¿liwiaj¹ sk³adanie pracy w jêzyku polskim
 \usepackage{graphicx} % Ten pakiet umo¿liwia umieszczanie obrazków w tekœcie
+\usepackage{fancyhdr,lipsum}
+\usepackage{listings}
+\usepackage{enumerate}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\bfseries \thepage}
 
+%\pagenumbering{arabic}
 % Ten kawa³ek nag³ówka definiuje ró¿ne œrodowiska, których u¿ywaæ bêdziemy podczas pisania pracy. Jeœli
 % potrzebne jest jakieœ inne, to mo¿na tu je dodaæ w analogiczny sposób jak poni¿ej.
 % W tych œrodowiskach tekst pisany jest pochy³¹ czcionk¹:
@@ -71,121 +80,345 @@ vfill\pagebreak
 % Spis treœci %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents % Spis treœci jest generowany automatycznie przez LaTeXa
 \let\cleardoublepage\clearpage % To taka ma³a sztuczka, która nie pozwala LaTeXowi wstawiaæ pustych stron przed nowymi rozdzia³ami
-\pagestyle{myheadings} \markboth{}{} % Ta komenda pozwala pozbyæ siê nag³ówków stron
+%\pagestyle{myheadings} \markboth{}{} % Ta komenda pozwala pozbyæ siê nag³ówków stron
 
 % Wstêp %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter*{Wstêp}
 
-Wstêp do pracy magisterskiej powinien zajmowaæ jedn¹ do dwu stron. Nale¿y tu opisaæ zawartoœæ pracy magisterskiej
-i kolejnoœæ, w jakiej zosta³ u³o¿ony materia³. Jeœli istniej¹ jakieœ pozamatematyczne powody, dla których problemy
-badane w pracy s¹ interesuj¹ce (np. praktyczne zastosowania), to mo¿na je tu wymieniæ razem ze wszystkimi pozosta³ymi
-motywacjami (jeœli istniej¹) dla których zajêcie siê tym konkretnie dzia³em matematyki jest wa¿ne, interesuj¹ce
-lub produktywne. Jeœli opisujemy klasyczne wyniki to mo¿na tu te¿ umieœciæ krótk¹ notkê historyczno- -biograficzn¹.
-
-Wstêp powinien równie¿ wyjaœniaæ, która czêœæ pracy jest Pañstwa samodzielnym dzie³em (w sporej czêœci prac
-magisterskich jest to zbiór pusty).
-
-Nale¿y natomiast unikaæ wg³êbiania siê we wstêpie w techniczne szczegó³y, tzn. podawania konkretnych definicji i
-wypowiedzi twierdzeñ.
+	Wybór tematu poni¿szej pracy jest uzasadniony zaintresowaniami autora w dziedzinie robotyki i elektroniki, jak równie¿
+sugestiami osób promuj¹cych pracê oraz faktem, ¿e roboramiona s¹ powszechnie u¿ywane w projektach elektronicznych i maszynach przemys³owych. 
+Podstaw¹ w poprawnym dzia³aniu takich ramion jest odpowiednie zaprojektowanie, ale ¿adna, nawet najbardziej dopracowana maszyna, mo¿e byæ bezu¿yteczna,
+jeœli byt odpowiadaj¹cy za jej pracê jest nieprawid³owo przygotowany, dlatego bez odpowiedniego programu obs³uguj¹cego elektronikê ¿aden projekt nie ma sensu. \\
+\indent
+	Najbardziej popularniej i ogólniedostêpnne czêœci na rynku elektronicznym s¹ zazwyczaj
+bardzo prymitywne w budowie, co oczywiœcie ma swoje zalety jak
+i wady. Do tych drugich nale¿y awaryjnoœæ, ale nie spowodowana b³êdami projektowymi czy produkcyjnymi, a nieumiejêtnoœci¹ i brakiem rozwagi u¿ytkowników.
+S¹ to uszkodzenia mechaniczne, polegaj¹ce na spaleniu czy po³amaniu mechanizmów wewnêtrznych, a powodem tego jest niedopasowanie tych elementów do 
+warunków zewnêtrznych w jakich bêd¹ one pracowaæ - nacisk elementów monta¿owych, zjawiska naturalne itd. Jednym z za³o¿eñ projektu i kolejnym aspektem 
+motywuj¹cym do wykonania opisywanej pracy jest unikniêcie wy¿ej opisanej sytuacji. \\ \\
+\indent
+Kompletne Ÿród³a programów, napisane na potrzeby poni¿szej pracy, znajduj¹ siê pod adresem (I TU BÊDZIE LINK DO REPOZYTORIUM Z GITHUBA) 
+\\ \\
+\indent
+Autor pragnê zaprosiæ do czytania i refleksji nad opisywanymi problemami.
 
 % G³ówna czêœæ pracy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Tytu³ rozdzia³u pierwszego}
+\chapter{Ogólne przedstawienie problemu}
+\section{Budowa ramienia robota - za³o¿enia}
 
-Pracê nale¿y w logiczny sposób podzieliæ na rozdzia³y, zazwyczaj dwa do piêciu. Nasza przyk³adowa praca
-bêdzie mia³a dwa rozdzia³y.
+W za³o¿eniach omawianego projektu, budowane ramiê ma zostaæ wykorzystane do poruszania siê obiektu, czyli do bazy urz¹dzenia zostanie przymocowanych kilka sztuk prezentowanego ramienia oraz zostanie zaimplementowany algorytm synchronizuj¹cy ramiona. Projektowane ramiê mo¿na porównaæ do odnó¿a paj¹ka lub ludzkiej rêki bez d³oni - staw zawiasowy pozwalaj¹cy na ruch przymocowanego dystansu w jednej p³aszczyŸnie oraz staw kulisty pozwalaj¹cy na ruch ca³ej konstrukcji w dwóch p³aszczyznach. 
+(tu model z CADa). \\
+\indent
+Kolejnym za³o¿eniem jest mo¿liwoœæ sterowania ramieniem za pomoc¹ aplikacji komputerowej wykorzystuj¹c 
+wybrany kontroler (mysz lub joystick czêsto wykorzystywany w grach) oraz odpornoœæ na przeci¹¿enia
+spowodowane napotkanymi przeszkodami.
 
-\chapter{Tytu³ rozdzia³u drugiego}
 
-Przyjrzyjmy siê teraz w jaki sposób sk³adamy definicje, twierdzenia, lematy, obserwacje, dowody i tym podobne.
+\section{Dobór podzespo³ów i technologii}
 
-\begin{definicja}
-Definicje zwyczajowo sk³adane s¹ pismem prostym. Samo definiowane pojêcie mo¿na natomiast wyró¿niæ pisz¹c je pismem
-pochy³ym, np. tak: {\it przeciwprostok¹tn¹} nazywamy najd³u¿szy z boków trójk¹ta prostok¹tnego.
-\end{definicja}
+Do budowy stawów, o których mowa w rodziale 1.1 wykorzystano serwa modelarskie SG90 - jedne 
+z najbardziej popularnych i ³atwo dostêpnych serw na rynku, które charakteryzuj¹ siê równie¿
+niskimi kosztami.  Poœrednikiem pomiêdzy serwami, a komputerem, który zapewni odpowiedni¹ kontrolê serw 
+oraz transmisjê szeregow¹ bêdzie p³ytka prototypowa Arduino Mega, oparta o mikrokontroler ATmega 2560, który 
+charakteryzuje siê zegarem o taktowaniu 16 MHz, 256 kB pamiêci Flash oraz 8kB pamiêci RAM. Ka¿da p³ytka z rodziny
+Arduino posiada 10-cio bitowe przetworniki analogowo-cyfrowe, jednak tylko mikrokontroler w Arduino Mega posiada 
+wbudowane wzmacniacze ró¿nicowe pozwalaj¹ce na ró¿nicowy pomiar napiêæ, co jest podstaw¹ uzyskania sygna³u zwrotnego
+z serw i zabezpieczenia ich przed spaleniem. Opisywana p³ytka prototypowa posiada z³¹cze USB typu B, które pozwala na
+pod³¹czenie jej do komputera w celu zaprogramowania oraz zapewnienia transmisji szeregowej, dziêki czemu mo¿emy w czasie 
+rzeczywistym przesy³aæ instrukcje steruj¹ce z komputera oraz informacje o przeci¹¿eniach do komputera. \\ 
+\indent
+Za sterowanie serwami oraz analizê i prezentacjê informacji o przeci¹¿eniach odpowiada program komputerowy napisyany
+w jêzyku C\#. Jest to obiektowy jêzyk programowania zaprojektowany dla firmy Microsoft. Programy napisane w tym jêzyku s¹ 
+kompilowane do jêzyka CIL (Common Intermediate Language) - jest to kod poœrednicz¹cy, który do wykonania wymaga œrodowiska 
+uruchomieniowego np .NET Framework. 
 
-\begin{twierdzenie}
-WypowiedŸ twierdzenia zwyczajowo sk³adana jest italikiem (pochy³ym pismem).
-\end{twierdzenie}
+\chapter{Opis wybranych technologii}
+\section{Czym s¹ serwa ? - zasada dzia³ania i ich specyfikacja }
 
-\begin{proof}
-Dowody twierdzeñ sk³adane s¹ czcionk¹ romañsk¹ (prost¹). Œrodowisko ``proof'' automatycznie na koñcu dowodu
-umieszcza pusty kwadracik.
-\end{proof}
+Serwa, a w³aœciwie serwomechanizmy s¹ podstawowymi elementami wykorzystywanymi w modelarstwie. 
+Dziêki nim mo¿liwe s¹ ruchy ró¿nego typu czêœci sk³adowych modelu pozwalaj¹cych na sterowanie,
+na przyk³ad serwa realizuj¹ wychylenia osi w modelach pojazdów, co umo¿liwia ich skrêcanie. 
+Podstawowymi elementami, na które sk³ada siê serwo s¹:
+\begin{itemize}
+	\item Silnik napêdowy sterowany pr¹dem sta³ym
+	\item Potencjometr
+	\item Wewnêtrzny uk³ad, który steruje prac¹ silnika
+	\item Przek³adnia zêbata, pozwalaj¹ca uzyskaæ moc i moment obrotowy 
+\end{itemize}
 
-\begin{lemat}
-Lematy wygl¹daj¹ dok³adnie tak samo jak twierdzenia. 
-\end{lemat}
-
-\begin{proof}
-Dowody lematów s¹ sk³adane przy u¿yciu tego samego œrodowiska, co dowody twierdzeñ.
-\end{proof}
-
-\begin{obserwacja}
-Obserwacje s¹ podobne do definicji.
-\end{obserwacja}
-
-\begin{uwaga}
-Uwagi s¹ podobne do definicji i obserwacji.
-\end{uwaga}
-
-\begin{przyklad}
-Przyk³ady s¹ podobne do definicji, obserwacji i uwag.
-\end{przyklad}
-
-Jeœli potrzebne s¹ jeszcze jakieœ inne œrodowiska to mo¿na je dodatkowo zdefiniowaæ
-w nag³ówku pracy - te umieszczone przed komend¹ $\backslash$theoremstyle sk³adane bêd¹
-pismem pochy³ym, te po niej - pismem prostym.\bigskip
-
-LaTeX pozwala umieszczaæ w tekœcie w pe³ni zautomatyzowany sposób odnoœniki do twierdzeñ, lematów
-itp. z innych czêœci tekstu. Zilustrujmy to przyk³adem - najpierw wypiszmy definicjê i nadajmy
-jej nazwê ``glownadefinicja'':
-
-\begin{definicja}\label{glownadefinicja} % Komenda label s³u¿y do nadawania nazw obiektom w pracy
-To jest g³ówna definicja w pracy.
-\end{definicja}
-
-Jeœli póŸniej zajdzie potrzeba zacytowania tej definicji to mo¿na to zrobiæ w nastêpuj¹cy sposób:
-w³asnoœæ ta jest prost¹ konsekwencj¹ definicji \ref{glownadefinicja}.
-
-Proszê wstawiæ teraz przed definicjê \ref{glownadefinicja} jakiœ lemat lub twierdzenie, skompilowaæ
-plik ponownie dwa razy i zobaczyæ, co siê sta³o.
-
-Stosowanie tej metody niebezpoœredniego cytowania œrodowisk pozwala unikn¹æ tracenia mnóstwa czasu
-na poprawki, jeœli np. po napisaniu ca³ej pracy zdamy sobie sprawê, ¿e pomiêdzy dwie pierwsze definicje
-musimy wstawiæ jeszcze trzeci¹.\bigskip
-
-Œrodowiskom mo¿emy nadawaæ w³asne nazwy. Zilustrujemy to przyk³adem, który przy okazji wska¿e jak
-oddzieliæ twierdzenie od jego dowodu.
-
-\begin{twierdzenie}[{\sc Pitagorasa}]\label{twpitagorasa}
-W trójk¹cie prostok¹tnym o przyprostok¹tnych d³ugoœci $a$ i $b$ oraz przeciwprostok¹tnej d³ugoœci $c$ zachodzi wzór $a^2+b^2=c^2$.
-\end{twierdzenie}
-
-\begin{uwaga}
-Istnieje mnóstwo dowodów tego twierdzenia. Przedstawimy jeden z najstarszych z nich.
-\end{uwaga}
-
-\begin{proof}[Dowód (twierdzenia \ref{twpitagorasa})]
-Tu umieszczamy dowód.
-\end{proof}\bigskip
-
-Pliki graficzne mo¿na umieszczaæ w tekœcie pracy w nastêpuj¹cy sposób:
-
+Do sterowania serwami wykorzystywany jest sygna³ PWM (Pulse-Width Modulation) - jest to metoda regulacji 
+pr¹du o sta³ej amplitudzie i czêstotliwoœci, natomiast zmianie ulega wype³nienie. Czêstotliwoœæ tego sygna³u 
+w serwach analogowych jakim jest SG90 to 50 Hz. W serwach cyfrowych jest to 300 Hz i takie serwa maj¹ wiêksz¹ precyzjê.
+Dziêki tranzystorom wbudowanym w mikrokontroler ATmega oraz funkcj¹ wbudowanym w Arduino wytworzenie takiego sygna³u
+jest bardzo proste - inicjujemy go wartoœci¹ jednobajtow¹ czyli z zakresu 0-255. Wykorzystuj¹c podane wy¿ej dane
+³atwo bêdzie zrozumieæ poni¿szy przyk³ad:
+Przy czêstotliwoœci 50 Hz wykonywanych jest 50 zmian sygna³u w ci¹gu sekundy, czas trwania sygna³u po zmianie to
+oko³o 20 ms. Sygna³ jest inicjowany wartoœci¹ 128 - oko³o po³owy z dostêpnego zakresu. W rezultacie na wyjœciu zostaje
+otrzymany cykliczny sygna³, gdzie na przemian w odcinkach 20 ms wystêpuje 5 V i 0 V. 
 \begin{center}
-\includegraphics{logo_uj.png}
+	\includegraphics[width=10cm]{../Grafiki/PWM.jpg}
 \end{center}
 
-Nasz przyk³adowy plik jest w formacie .png, ale równie dobrze móg³by to byæ obrazek w formacie .jpg. Jeœli decydujemy siê
-na umieszczenie plików graficznych w pracy, to kompilowaæ j¹ musimy odt¹d bezpoœrednio do formatu .pdf, poniewa¿ próba kompilacji
-niepostskryptowej grafiki do formatu .dvi nie udaje siê.
+\indent Do silnika przymocowany jest potencjometr, który obraca siê wraz z obrotem silnika, czyli zmienia siê rezystancja
+pr¹du - jest to informacja o aktualnym po³o¿eniu serwa. Pr¹d ten trafia do komparatora, gdzie jest porównywany z podanym
+pr¹dem wzorcowym (sygna³em steruj¹cym). Wytworzony w komparatorze pr¹d to informacja o ró¿nicy pomiêdzy aktualn¹ pozycj¹
+silnika, a pozycj¹ zadan¹. Ta informacja trafia do korektora, a jego zadaniem jest obrócenie silnika, tak aby zmniejszyæ
+ró¿nicê w pozycjach, a¿ do uzykania po¿adnego efektu.
+\begin{center}
+	\includegraphics[width=10cm]{../Grafiki/BlokScheme.png}
+\end{center}
+Serwomechanizmy dzielimy na grupy, a podzia³ ten jest realizowany ze wzglêdu na wagê oraz materia³y,
+z których jest wykonane serwo. W opisywanym projekcie serwa jakie s¹ wykorzystywane to SG90 firmy Tower Pro. 
+Jest to serwo z grupy micro, czyli takie o wadze do 10 gram, a to ma 9 g, oraz o plastikowych przek³adniach zêbatych. 
+Inne grupy serw to:
+\begin{itemize}
+	\item mini - o wadze oko³o 25 g oraz metalowych lub karbonowych przek³adni, a tym samym generuj¹ce wiêkszy moment si³y
+	\item tandard - du¿e serwa o wadze oko³o 50 g, wystêpuj¹ w ró¿nych odmianach, s¹ bardzo silne
 
-Mo¿emy bezpoœrednio z poziomu LaTeXa sterowaæ rozmiarami wklejanego obrazka za pomoc¹ parametrów ``width'' i ``height''. Oto ten sam obrazek
-pomniejszony przez LaTeX:
+\end{itemize}
+
+Dok³adna specyfikacja wykorzystywanego serwa Tower Pro SG90 :
+\begin{itemize}
+	\item Zasilanie: 4.8 V - 6.0 V
+	\item Zakres ruchu: 180 s
+	\item Grupa: micro
+	\item Moment 1.8 kg * cm
+	\item Prêdkoœæ 0.10 s /60st
+	\item Rodzaj: analogowe
+	\item Wymiary 22x12x27 mm (d³ x szer x wys)
+	\item Masa: 9 g	
+\end{itemize}
 
 \begin{center}
-\includegraphics[width=0.5cm, height=0.5cm]{logo_uj.png}
-\end{center}\bigskip
+	\includegraphics[width=8cm]{../Grafiki/SG90.jpg}
+\end{center}
 
+\section{Pomiar ró¿nicowy - na czym polega ? Przewaga nad innymi rozwi¹zaniami }
+
+W rozdziale 2.1 zosta³a opisana zasada ustalania i zmian pozycji serwa, która polega na porównywaniu pr¹dów. 
+S¹ to pr¹dy dotycz¹ce pozycji serwa. Niestety samo to rozwi¹zanie ma pewn¹ wadê - jeœli serwo nie znajdzie siê na zadanej
+pozycji korektor bêdzie usilnie chcia³ odpowiednio ustawiæ silnik. Takie dzia³anie bêdzie prowadziæ spalenia silnika lub
+uszkodzenia przek³adni zêbatych. Za³o¿eniem projektu jest unikniêcie takich sytuacji. Wybranym rozwi¹zaniem tego problemu
+jest zastosowanie rezystora bocznikuj¹cego oraz wykonywanie ró¿nicowego pomiaru napiêcia, które na nim panuje. 
+
+Ró¿nicowy pomiar napiêcia polega na pod³¹czeniu dwóch bezpoœrednich koñców badanego elementu do komparatora,
+a dopiero pr¹d na wyjœciu komparatora trafia do przetwornika ADC (Analog->Digital Converter).
+\begin{center}
+	\includegraphics[width=7cm]{../Grafiki/compADC.png}
+\end{center}	
+Zalet¹ tego rozwi¹zania jest odpornoœæ na ewentualne szumy, poniewa¿ przewody po³¹czeniowe s¹ blisko siebie,
+s¹ tej samej jakoœci i d³ugoœci, a wiêc posiadaj¹ ten sam opór oraz zewnêtrzne oddzia³ywania wp³ywaj¹ tak samo na oba przewody,
+czyli ró¿nica bêdzie taka sama niezale¿nie od zaburzeñ. 
+\begin{center}
+	\includegraphics[width=12.5cm]{../Grafiki/DiffNoise.jpg}
+\end{center}
+
+Innym mo¿liwym rozwi¹zaniem problemu jest rozebranie serwa i pod³¹czenie siê do sygna³u z potencjometru lub komparatora,
+odpowiednia analiza w mikrokontrolerze i interakcja. Jednak w tym przypadku przeci¹¿enie mo¿emy mierzyæ tylko na podstawie
+pomiaru czasu w jakim serwo siê przemieszcza do zadanej pozycji, a logicznym jest ¿e jeœli trwa to zbyt d³ugo to oznacza, ¿e 
+silnik jest w jakiœ sposób blokowany. To rozwi¹zanie, z pozoru ³atwiejsze, ma jednak pewne wady - w pomiarze musi zostaæ
+uwzglêdniona ustalona prêdkoœæ serwa co dodatkowo skomplikuje algorytm. Serwa przemieszczaj¹ siê doœæ szybko, a przetworniki ADC
+wbudowane w mikrokontroler maj¹ ograniczaon¹ szybkoœæ, zw³aszcza kiedy ten sam mikrokontroler musi zapewniæ równie¿ transmisjê
+szeregow¹ i sterowanie serwem. Ponadto w tym rozwi¹zaniu nie jest zapewniona odpornoœæ na szumy, dlatego wybrane do opisywanego 
+projektu rozwi¹zanie polegaj¹ce na ró¿nicowym pomiarze napiêcia wydaje siê byæ jednym z najlepszych. \\
+
+
+\section{Przygotowany rezystor bocznikuj¹cy - dobór parametrów czêœci }
+
+Jak opisano w rodziale 2.2 pomiar ró¿nicowy wykonywany jest na elemencie elektronicznym - w tym przypadku jest to 
+rezystor bocznikuj¹cy, czyli rezystor o bardzo ma³ej rezystancji i du¿ej precyzji przeznaczony do pomiaru du¿ych pr¹dów i nie 
+wprowadzaj¹cy znacz¹cych strat w uk³adzie. Takie rezystory wykorzystywane s¹ we wszelkiego rodzaju miernikach pr¹du.
+Na potrzeby projektu powsta³a p³ytka z prostym uk³adem umo¿liwiaj¹cym opisywane pomiary. Zastosowano rezystor bocznikuj¹cy 
+o oporze 0.1 Ohm i maksymalnej wydzielanej mocy do 5 W, \\!!!!!!!!!!!!!!!!!!!!! CZY NA PEWNO W TYM CHODZI O TO 5 W ???????\\
+który zosta³ pod³¹czony szeregowo z silnikiem - powsta³ w ten spsoób dzielnik napiêcia. W trakcie wykonywania ruchów przez serwo,
+pr¹d na rezystorze roœnie. Dodatkowo w uk³adzie zastosowano kondensatory 10 mikroF 63V pod³¹czone równolegle miêdzy napiêciem
+a mas¹, aby .... \\ !!!!! NO W£AŒNIE - PO CO  ?????
+\begin{center}
+	\includegraphics[width=12cm]{../Grafiki/boardSchema.png}
+\end{center}
+
+\chapter{Program dla mikrokontrolera}
+\section{Œrodowisko ARDUINO }
+
+
+Arduino jest to elektroniczna platforma z otwartym Ÿród³em, która pozwala na proste programowanie wczeœniej 
+przygotowanych mikrokontrolerów. Arduino udostêpnia interfejs, który w intuicyjny sposób pozwala wykonywaæ z³o¿one 
+opracje na rejestrach ATmegi. Jest to projekt stale rozwijany, posiadaj¹cy wielu zwolenników, mnóstwo ksi¹¿ek do nauki
+oraz niezliczon¹ iloœæ wci¹¿ powstaj¹cych modu³ów poszerzaj¹cych funkcjonalnoœæ p³ytek prototypowych. Na p³ytce znajduje
+siê programator FTDI, a twórcy udostêpniaj¹ proste œrodowisko programistyczne z wbudowanym kompilaotem dziêki czemu 
+szereg operacji wymaganych przy typowym programowaniu procesorów AVR sprowadza siê do napisania kodu, pod³¹czenia p³ytki
+do portu USB i klikniêcia przycisku 'PROGRAMUJ'. \\
+
+\begin{center}
+	\includegraphics[width=5cm]{../Grafiki/arduino.png}
+\end{center}
+\section{ATmega 2560 - wzmacniacze ró¿nicowe }
+Spoœród p³ytek z rodziny Arduino (m.in Uno, Leonardo, Yum, Nano, Micro, Mega) tylko model Mega posiada mikrokontroler 
+spe³niaj¹cy wymagania projektu. Jest to mikrokontroler ATmega 2650 posiadaj¹cy wzmacniacze ró¿nicowe.
+Przetworniki ADC wbudowane w mikrokontrolery s¹ 10-cio bitowe co oznacza, ¿e zakres otrzymywanych wartoœci jest
+z przedzia³u 0-1023, a mierzony pr¹d trafiaj¹cy do przetwornika mo¿e byæ z zakresu 0V - 5V, czyli uzyskany pomiar 
+ma dok³adnoœæ +-4.88mV, a w przypadku pomiaru ró¿nicowego jest to +-9.17mV, poniewa¿ zakres wartoœci z prztwornika to 
+-511 - +511, a uwzglêdniane s¹ tylko pozytywne lub negatywne wartoœci. 
+Opór opisanego w rozdziale 2.3 rezystora bocznikuj¹cego jest bardzo ma³y, a to oznacza, ¿e ró¿nica mierzona na nim 
+równie¿ jest niewielka, czyli rozbie¿noœæ wartoœci okreœlaj¹ca czy serwo jest w trakcie ruchu czy w spoczynku równie¿ 
+jest znikoma i mo¿e byæ przek³amana przez ró¿ne szumy. Tu z pomoc¹ przychodzi wspomniany wzmacniacz ró¿nicowy, który
+oprócz porównania wejœciowych wartoœci ma mo¿liwoœæ wzmocnienia sygna³u o 10 lub 200 razy co oznacza, ¿e powsta³a z komparatora
+ró¿nica jest wzmacniania i dopiero ta wartoœæ trafia do 10-bitowego przetwornika czyli dok³adnoœæ pomiaru, w przypadku 
+wzmocnienia x200,	wzrasta do +- 24 mikroV w przedziale 0-25 mV.    \\CHYBA !!!! SPR \\
+\begin{center}
+	\includegraphics[width=12cm]{../Grafiki/BezWzmocnienia.jpg}\\
+	\includegraphics[width=12cm]{../Grafiki/ZWzmocnieniem.jpg}
+\end{center}
+
+Wy¿ej opisana operacja powoduje diametralne zwiêkszenie rozbie¿noœci miêdzy wartoœciami pr¹dów w ró¿ncyh stanach
+pracy serwomechanizmu. 
+
+\section{Transmisja szeregowa ARDUINO <=> PC oraz przyjêty sposób oznaczania danych }
+
+Transmisja szeregowa polega na szeregowym wysy³aniu i odbieraniu symboli, czyli jeden po drugim. W arduino odbywa siê 
+to za pomoc¹ wbudowanego portu USB.  Zainicjowany w programie BaudRate czyli iloœæ zmian sygna³u w ci¹gu sekundy 
+(iloœæ symboli na sekundê) jest równa iloœci bitów przesy³anych na sekundê, poniewa¿ standard USB 2.0 pos³ugujê siê tylko 
+dwoma stanami 0 i 1 dla odpowiednich napiêæ. Zosta³a ustawiona jedna z domyœlnych przepustowoœci i wynosi 9600 bps. 
+
+W celu zapewnienia porozumienia miêdzy urz¹dzeniami zosta³a opracowana pewna konwencja przesy³ania informacji. 
+Przesy³ane i odbierane s¹ ci¹gi znaków, które kolejno s¹ analizowane przez programy na urz¹dzeniach. Informacje s¹ przesy³ane
+tylko podczas wykonywania interakcji tak, aby nie zape³niæ buforów w p³ytce, poniewa¿ to urz¹dzenie  ma ograniczone zasoby. 
+W momencie wyst¹pienia przeci¹¿enia Arduino wysy³a sekwencjê znaków:  Dn:val , gdzie n jest numerem serwa, a val jest wartoœci¹
+odczytan¹ za pomoc¹ ró¿nicowego pomiaru na tym w³aœnie serwie. Arduino odbiera równie¿ sygna³y steruj¹ce z komputera w postaci:
+Sn:pos ,  gdzie n jest numerem wybranego serwa, a pos jest pozycj¹ w jakiej sero ma siê ustawiæ i ze wzglêdu na ograniczenia, 
+w postaci plastikowych elementów monta¿owych wartoœæ ta jest z zakresu 10-140, które oznaczaj¹ k¹t w st.
+
+\section{Brak pomiaru ró¿nicowego w interfejsie ARDUINO - dzia³ania na rejestrach mikrokontrolera }
+
+W zwi¹zku z wystêpowaniem wzmacniaczy ró¿nicowych tylko w modelu Mega, Arduino nie udostêpnia w interfejsie funkcji do 
+³atwego wykonywania takich pomiarów. Rozwi¹zaniem jest napisanie w³asnych funkcji, które bezpoœrednio ustawiaj¹ odpowiednie
+bity w rejestrach mikrokontrolera, o których mo¿na przeczytaæ w dokumentacji ATmegi 2560. Nale¿y ustawiæ porty, do których 
+pod³¹czone s¹ elementy wymagaj¹ce pomiaru, wartoœci referencyjne, z którymi sygna³ bêdzie porównywany - tu zosta³ ustawiony 
+na port sygna³ z portu zewnêtrznego, do którego nic nie jest pod³¹czone, poniewa¿ istota tkwi w wartoœciach p³yn¹cych przez
+bocznik. 
+Bity w opisywanych rejestrach s¹ te¿ zmieniane przez miktokontroler, co na przyk³ad oznacza ukoñczony pomiar,
+gotowy do odczytu. Zamieszczony ni¿ej fragment kodu zawiera funckje do inicjalizacji i wykonywania ró¿nicowych pomiarów napiêcia:
+\begin{lstlisting}
+void initdiff(){    // definition of initialization function
+	ADCSRA=(1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+	ADMUX = (1<<REFS0) |(0<<REFS1);       // set reference voltage
+	ADMUX |= (1<<MUX3)|(1<<MUX1)|(1<<MUX0);  // set  ports to read voltage (particular)
+}
+void adc1() {
+	ADCSRB = (0<<MUX5);    // set read port on A0 and A1
+}
+void adc2() {
+	ADCSRB = (1<<MUX5);    // set read port on A8 and A9 ?? 
+}
+uint16_t do_adc() {    // defintion of read function
+	ADCSRA |= (1<<ADSC); //Start an ADC conversion by setting the ADSC bit.
+	while(!(ADCSRA & (1<<ADIF)));  //Wait for the conversion to finish. The ADC signals that it's finished
+	ADCSRA|=(1<<ADIF); 
+	return ADC;  //Return the ADC result from the ADC register.
+};
+\end{lstlisting}
+
+Ca³y kod dostêpny jest w repozytorium na platformie GitHub, do którego link podano na wstêpie pracy. 
+
+\chapter{Aplikacja komputerowa}
+\section{Wybór jêzyka programowania }
+
+Praktycznie ka¿dy z powszechnie znanych jêzyków oprógramowania udostêpnia biblioteki lub funkcje wbudowana pozwalaj¹ce na inicjowanie i komunikacjê
+z urz¹dzeniami za pomoc¹ transmisji szeregowej. Mnóstwo jêzyków umo¿liwia te¿ proste przygotowanie graficznej reprezentacji danych, dlatego pojawia siê
+oczywiste logiczne pytanie: Dlaczego .NET C\# ?
+
+Sk³adnia progrmau pisanego w œrodowisku Arduino do z³udzenia przypomina sk³adniê C++ - jest to w³aœciwie C++ z dodanymi funkcjami do osb³ugi
+mikrokontrolera - dlatego dla zachowania jednolitoœci i prostego zrozumienia kodu naturalnym by³oby wybranie C++ dla napisania aplikacji kompterowej.
+Niestety wykorzystane w programie komponenty, a w³aœciwie sposób ich implementacji, jest uzale¿niony od systemu operacyjnego, a jak ju¿ zosta³o napisane
+Arduino jest œrodowiskiem pozwalaj¹cym na skompilowanie tego samego kodu niezale¿nie od systemu. Rozwi¹zaniem jest wybranie je¿yka wymagaj¹cego poœredniej
+maszyny wirtualnej do uruchomienia programu. Najbardziej znanymi i mocno rozwijanymi jêzykami spe³niaj¹cymi powy¿sze wymaganie jest Java i C\#, ale to 
+w³aœnie ten drugi ma interfejs bardzie zbli¿ony do C++. 
+\begin{center}
+	\includegraphics[width=7cm]{../Grafiki/CsharpLogo.png}
+\end{center}
+
+
+\section{Struktury u¿yte w aplikacji oraz wykrywanie przeci¹¿eñ serwomechanizmów }
+
+C\# jest je¿ykiem wysokoobiektowym wiêc ka¿da u¿yta struktura jest klas¹ lub nale¿y do klasy. Napisany program komputerowy zbiera informacje 
+o aktualnych przeci¹zeniach serw oraz poddaje je analizie. Otrzymane sygna³y s¹ blisko skrajne - dla braku przeci¹¿eñ pojawiaj¹ce siê wartoœci s¹ mniejsze
+od 10, natomiast w momencie pojawienia siê samego ruchu serwa wartoœci te przekraczaj¹ 500. Sposobem wykrycia przeszkody i blokady serwa, a nie samego ruchu 
+jest zebranie informacji z pewnego odcinka czasu i obliczenie œredniej arytmetycznej, poniewa¿ po wykonaniu ruchu otrzymywane wartoœci ponownie malej¹. 
+Do zmagazynowania informacji nadchodz¹cych z mikrokontrolera wykorzystano zmodyfikowan¹ kolejkê - domyœlna kolejka zaimlememntowana w C\# jest oparta o listê
+wskaŸnikow¹, czyli teoretycznie o nieskoñczonej pojemnoœci i braku dostêpu do konkretnej iloœci elemetnów wstecz. Spersonalizowana kolejka posiada konkretnie
+zdefiniowan¹ wielkoœc co oznacza, ¿e w przypadku przepe³nienia kolejki kolejny element nie zostanie bezpoœrednio dodany - wczeœniej zostanie skasowany 
+najstarszy element. Œredni¹ arytmetyczn¹ ostanich wartoœci mo¿na obliczyæ sumuj¹c wartoœci wszystkich przechowywanych elementów za pomoc¹ funckji foreach
+oraz podziliæ otrzyman¹ wartoœc przez wielkoœæ zdefiniowanej kolejki. Wielkoœæ ta jest zale¿na od szybkoœci nap³ywania danych z mikrokontrolera oraz 
+zamierzonej iloœci ostanich sekund, z których jest obliczana wspomniana œrednia.\\
+!!!!! (MO¯E)(tu fragment kodu)\\
+
+Jak opisano w rozdziale 3.3 informacje o przeci¹¿eniach s¹ wysy³ane tylko w momnecie wystêpowania przecia¿eñ czyli wysokich wartoœci na boczniku, natomiast 
+informacje do kolejki w aplikacji komputerowej musz¹ trafiaæ stale, dlatego mikrokontroler wysy³a te¿ trzeci¹ nieprzeci¹¿on¹ wartoœæ, a w¹tek w programie
+periodycznie kopiuje t¹ wartoœæ i wstawia do kolejki, a tym samym œrednia wartoœæ spada zgodnie z za³o¿eniem, nie nadu¿ywaj¹c buforów mikrokontrolera.\\
+
+
+\section{Inicjalizacja po³¹czenia i sterowanie serwami - przyjêta konwencja oznaczania danych }
+
+W programie wykorzystano domyœln¹ bibliotekê do komunikacji szeregowej. Funckje pozwalaj¹ w ³atwy sposób otworzyæ port komunikacyjny, zainicjowaæ
+po³¹czenie z odpowiednimi parametrami oraz odczytywanie i wysy³anie danych. Jako ¿e to aplikacja sprawdza wystêpowanie przeci¹¿eñ na serwach, nie mog¹
+one zostaæ pod³¹czone jeœli nie zostanie zainicjowanie po³¹czenie z programem. Zosta³o to zrealizowane w nastêpuj¹cy sposób:
+\begin{enumerate}[{1}]
+	\item Mikrokontroler po uruchomieniu wysy³a periodycznie specjalne has³o "I am GOD", które zosta³o podane w implementacji.
+	\item To samo has³o zosta³o podane w kodzie programu komputerowego - program po otworciu portu sprawdza czy otrzymywany kod zgadza siê z podanym w kodzie
+	\item Po zweryfikowaniu urz¹dzenia program wysy³a do mikrokontolera swój kod (ten sam), a mikrokontroler porównuje has³o wbudowane i otrzymane. 
+	\item Po zweryfikowaniu kodu, mikrokontroler pod³¹cza serwa - wtedy zaczynaj¹ stawiaæ opór na nacisk.
+\end{enumerate}
+
+
+Po zamkniêciu aplikacji oraz wykryciu przeci¹¿enia program wysy³a do mikrokontrolera polecenie inicjuj¹ce od³¹czenie serw "exit" oraz "break", aby unikn¹æ ich zniszczenia.
+Gdy œrednia pr¹dów wystêpuj¹cych na dzielniku napiêcia spadnie poni¿ej pewnego poziomu zostaje wys³ane polecenie "continue", które wymusza ponowne pod³¹czenie serw. 
+Program wysy³a sygna³ ustalenie pozycji serw w postaci:
+Sn:pos ,  gdzie n jest numerem wybranego serwa, a pos jest pozycj¹ z zakresu 10-140 w jakiej sero ma siê ustawiæ.\\
+
+\section{Prezentacja danych }
+
+Aplikacja komputerowa zosta³a napisana wykorzystuj¹c œrodowisko Visual Studio 2015. Jedn¹ z klas wbudowanych w C\# oraz narzêdziem oferowanych 
+w Visualowym ToolBoxie jest Chart czyli z jêzyka angielskiego "Wykres". Udostêpnia intuicyjny interfejs, w którym wystarczy wybraæ typ wykresu,
+typ splajnu, kolorystykê, agendê, a w trakcie dzia³ania programu podawane s¹ wartoœci od aktualnego czasu i wpisywane w wykres. Dodatkowo za pomoc¹ 
+wbudowanej w klasê funckji wykres jest przeskalowywany wzglêdem osi Y dla lepszej czytelnoœci w przypadku d³u¿szego pojawiania siê podobnych wartoœci. 
+(wykresy z programu)
+
+Interwa³ czasowy z jakim wprowadzane s¹ dane do wykresu musi byæ równy inwerwa³owi z jakim przychodz¹ dane z mikrokontrolera, 
+a w³aœciwie z jakim dane wp³ywaj¹ do kolejki opisanej w rozdziale 5.2 tak, aby wprowadzane wartoœci nie dublowa³y siê oraz nie zosta³y pominiête.
+(byæ mo¿e fragment kodu)\\
+
+\section{Wykorzystanie kontrolera gier do sterowania ramieniem  }
+
+Do aplikacji zaimplementowano dodatkow¹ funckjonalnoœæ jak¹ jest mo¿liwoœæ sterowania ramieniem robota za pomoc¹ kontrolera do gier.
+W tym celu wykorzystano otwartoŸród³owe API (Application Programming Interface) do DirectX o nazwie SlimDX, które jest przeznaczone g³ównie do tworzenia gier 
+pod platform¹ .NET, ale w tym przypadku pos³u¿y³o do oprogramowania kontrolerów do gier. Interfejs, który udostêpnia SlimDX jest uniwersalny i implementacja
+jednego kodu pozwala na u¿ywanie ró¿nego typu kontrolerów do gier - joysticków, gamepadów, kierownic itd. Do u¿ycia wystarczy zaledwie pod³¹czyæ kontroler
+do komputera wraz z zainstalowanymi sterownikami do urz¹dzenia, uruchomiæ aplikacjê i spoœród listy dostêpnych urz¹dzeñ wybraæ to interesuj¹ce. 
+(screen z aplikacji z podkreœlniem opcji wyboru)
+(tu byæ mo¿e oopiszê mój kontroler z ma³¹ instrukcj¹ obs³ugi)
+
+\chapter{Podsumowanie oraz przyk³ady wykorzystania projektu}
+
+Technologiê wykrywania przeci¹¿eñ opisan¹ w powy¿szej pracy, przy odpowiednim doborze parametrów czêœci elektronicznych, mo¿na zastosowaæ niemal w ka¿dym
+urz¹dzeniu wymagaj¹cym takiej kontroli, dlatego iloœæ zastosowañ jest praktycznie nieskoñczona. Mog¹ to byæ nie tylko serwa, ale równie¿ standardowe silniki,
+si³owniki, pompy itp. Do najbardziej oczywistych zastosowañ prezentowanegp projektu nale¿y system poruszania siê i przesuwania przeszkód w eksploratorach
+obszarów czy ³azikach pozaziemnskich - poruszanie siê na np szeœciu koñczynach podobnych do tych u paj¹ków jest du¿o bardziej odporne na utrudnienia terenu, ni¿
+ko³a czy g¹sienice. 
+\begin{center}
+	\includegraphics[width=7cm]{../Grafiki/robo_spider.png}
+\end{center}
+
+Innym przyk³adem s¹ modele samolotów, w których uk³ad sterowania lotek czêsto realizowany jest za pomoc¹ serwomechanizmów. Silne opory powietrza mog¹ zniszczyæ
+mechanizm, wiêc za pomoc¹ systemu u¿ytkownik dostanie ostrze¿enie o takiej mo¿liwoœci i sugestiê zaprzestania lotów.
+\begin{center}
+	\includegraphics[width=7cm]{../Grafiki/RC_Plane.jpg}
+\end{center}
+
+Prototypy linii monta¿owych w fabrykach, a w³aœciwie ramion pracuj¹cych na linii to równie¿ przyk³ad, w którym wymagane jest kontrolowanie sporej iloœci serw
+i silników, w przypadku awarii firma poniesie ogromne straty produkcyjne, jak równie¿ ucierpieæ mog¹ pracownicy obs³uguj¹ce maszyny - odpowiedni system mo¿e 
+temu przeciwdzia³aæ. Identyczna sytuacja jak i konsekwencje mog¹ siê pojawiæ w przypadku braku kontroli "³y¿ek" w koparkach. 
+
+\chapter*{Bibliografia}
 % Bibliografia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Wszyskie ksi¹¿ki, artyku³y oraz naukowe strony internetowe wzmiankowane w pracy musz¹ znaleŸæ siê wraz z dok³adnymi danymi
 bibliograficznymi w referencjach na koñcu pracy. Ponadto ka¿da referencja umieszczona w bibliografii musi byæ wymieniona

@@ -1,17 +1,16 @@
 WSTĘP
 
-	Zgodnie z ogólnie przyjętymi zasadami kultury osobistej na wstępie wypada się mi, jako autorowi poniższej pracy, przedstawić  - tak więc nazywam się
-Gącik Jakub i aktualnie (a mamy 2017 rok po narodzinach Chrystusa) jestem studentem III roku Informatyki na Wydziale Fizyki, Astronimii i Informatyki Stosowanej
-Uniwersytetu Jagielońskiego w Krakowie. Wybór tematu opisywanej pracy jest uzasadniony moimi zaintresowaniami w dziedzinie robotyki i elektroniki, jak również
-sugestiami osób promujących moją pracę oraz faktem, że roboramiona są powszechnie używane w projektach elektronicznych i maszynach przemysłowych. 
-Podstawą w poprawnym działaniu takich ramion jest odpowiednie zaprojektowanie, ale żadna, nawet najlepiej przygotowana maszyna, może być beznadziejna, jeśli
-byt odpowiadający za jej pracę jest zły, dlatego bez odpowiedniego programu obsługującego elektronikę żaden projekt nie ma sensu.
-Istnieje jednak jeszcze jeden powód ...
+	Wybór tematu poniższej pracy jest uzasadniony zaintresowaniami autora w dziedzinie robotyki i elektroniki, jak również
+sugestiami osób promujących pracę oraz faktem, że roboramiona są powszechnie używane w projektach elektronicznych i maszynach przemysłowych. 
+Podstawą w poprawnym działaniu takich ramion jest odpowiednie zaprojektowanie, ale żadna, nawet najbardziej dopracowana maszyna, może być bezużyteczna,
+ jeśli byt odpowiadający za jej pracę jest nieprawidłowo przygotowany, dlatego bez odpowiedniego programu obsługującego elektronikę żaden projekt nie ma sensu.
 	Najbardziej popularniej i ogólniedostępnne części na rynku elektronicznym są zazwyczaj bardzo prymitywne w budowie, co oczywiście ma swoje zalety jak
 i wady. Do tych drugich należy awaryjność, ale nie spowodowana błędami projektowymi czy produkcyjnymi, a nieumiejętnością i brakiem rozwagi użytkowników.
 Są to uszkodzenia mechaniczne, polegające na spaleniu czy połamaniu mechanizmów wewnętrznych, a powodem tego jest niedopasowanie tych elementów do 
 warunków zewnętrznych w jakich będą one pracować - nacisk elementów montażowych, zjawiska naturalne itd. Jednym z założeń projektu i kolejnym aspektem 
-motywującym mnie do wykonania opisywanej pracy jest uniknięcie wyżej opisanej sytuacji, dlatego nie przedłużając tego już przydługiego wstępu zamieniam 
-styl na bardziej formalny i naukowy i pragnę zaprosić do czytania i refleksji nad opisywanymi aspektami.
+motywującym do wykonania opisywanej pracy jest uniknięcie wyżej opisanej sytuacji. 
+	Kompletne źródła programów, napisane na potrzeby poniższej pracy, znajdują się pod adresem (I TU BĘDZIE LINK DO REPOZYTORIUM Z GITHUBA) 
+	
+Autor pragnę zaprosić do czytania i refleksji nad opisywanymi problemami.
 
-PS. Kompletne źródła programów, które napisałem na potrzeby poniższej pracy, znajdują się pod adresem (I TU BĘDZIE LINK DO REPOZYTORIUM Z GITHUBA) 
+  
