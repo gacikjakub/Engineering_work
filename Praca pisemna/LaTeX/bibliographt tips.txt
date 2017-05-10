@@ -1,0 +1,21 @@
+\chapter*{Bibliografia}
+% Bibliografia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Wszyskie ksi¹¿ki, artyku³y oraz naukowe strony internetowe wzmiankowane w pracy musz¹ znaleŸæ siê wraz z dok³adnymi danymi
+bibliograficznymi w referencjach na koñcu pracy. Ponadto ka¿da referencja umieszczona w bibliografii musi byæ wymieniona
+choæ jeden raz w g³ównym tekœcie pracy magisterskiej. Najpierw w bibliografii umieœciæ nale¿y ksi¹¿ki i artyku³y
+posortowane rosn¹co wed³ug nazwiska autora (jeœli jest kilku autorów, to do sortowania u¿ywamy tego nazwiska, które jest
+najwczeœniejsze w porz¹dku leksykograficznym). Po ksi¹¿kach i artyku³ach umieszczamy listê cytowanych stron sieciowych
+w kolejnoœci alfabetycznej (uwaga, wolno cytowaæ jedynie wiarygodne strony naukowe, np. MathWorld. Strony z publiczn¹
+mo¿liwoœci¹ edycji zawartoœci, np. Wikipedia, dla naszych potrzeb NIE S¥ uznawane za wiarygodne Ÿród³a!).
+
+Ksi¹¿ki i artyku³y nale¿y opisywaæ œciœle wg przyk³adów podanych poni¿ej, pilnuj¹c aby wszystko siê zgadza³o do ostatniej
+kropki i ostatniego przecinka (³¹cznie z krojem pisma i wyt³uszczeniami). Jest ustalona osobna kolejnoœæ podawania danych
+dla ksi¹¿ek i osobna dla artyku³ów. Nazwy czasopism matematycznych umieszczamy w bibliografii w ich oficjalnej formie
+skrótowej, któr¹ znaleŸæ mo¿na na stronie http://ams.rice.edu/mathscinet/search.html (zak³adka journals, strona powinna
+byæ dostêpna z komputerów w Instytucie Matematyki).
+
+Proszê zwróciæ uwagê, ¿e komenda $\backslash$bibitem nadaje nazwê ka¿dej pozycji w bibliografii. Aby odwo³aæ siê do niej
+w g³ównym tekœcie pracy postêpujemy nastêpuj¹co: ta hipoteza zosta³a postawiona w %\cite{przykladowyartykul}.
+\bigskip
+
+To wszystko. W razie problemów pomoc¹ s³u¿¹ Google oraz Pañstwa promotor. ¯yczê wytrwa³oœci w pracy!
