@@ -5,12 +5,12 @@
 \contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{2}{Opis wybranych technologii}}{7}
 \contentsline {section}{\tocsection {}{2.1}{Czym s\k a serwa ? - zasada dzia\IeC {\l }ania i ich specyfikacja }}{7}
 \contentsline {section}{\tocsection {}{2.2}{Pomiar r\'o\.znicowy - na czym polega ? Przewaga nad innymi rozwi\k azaniami }}{9}
-\contentsline {section}{\tocsection {}{2.3}{Przygotowany rezystor bocznikuj\k acy - dob\'or parametr\'ow cz\k e\'sci }}{10}
+\contentsline {section}{\tocsection {}{2.3}{Przygotowany rezystor bocznikuj\k acy - dob\'or parametr\'ow cz\k e\'sci }}{11}
 \contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{3}{Program dla mikrokontrolera}}{12}
 \contentsline {section}{\tocsection {}{3.1}{\'Srodowisko ARDUINO }}{12}
 \contentsline {section}{\tocsection {}{3.2}{ATmega 2560 - wzmacniacze r\'o\.znicowe }}{12}
-\contentsline {section}{\tocsection {}{3.3}{Transmisja szeregowa ARDUINO \(<=>\) PC oraz przyj\k ety spos\'ob oznaczania danych }}{14}
-\contentsline {section}{\tocsection {}{3.4}{Brak pomiaru r\'o\.znicowego w interfejsie ARDUINO - dzia\IeC {\l }ania na rejestrach mikrokontrolera }}{14}
+\contentsline {section}{\tocsection {}{3.3}{Transmisja szeregowa ARDUINO \(<=>\) PC oraz przyj\k ety protok\'o\IeC {\l } danych }}{14}
+\contentsline {section}{\tocsection {}{3.4}{Brak pomiaru r\'o\.znicowego w interfejsie programowym ARDUINO - dzia\IeC {\l }ania na rejestrach mikrokontrolera }}{14}
 \contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{4}{Aplikacja komputerowa}}{16}
 \contentsline {section}{\tocsection {}{4.1}{Wyb\'or j\k ezyka programowania }}{16}
 \contentsline {section}{\tocsection {}{4.2}{Struktury u\.zyte w aplikacji oraz wykrywanie przeci\k a\.ze\'n serwomechanizm\'ow }}{16}
