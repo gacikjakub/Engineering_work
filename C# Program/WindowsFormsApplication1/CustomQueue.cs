@@ -8,37 +8,55 @@ namespace ServoMonitoring_with_Control
 {
     public class CustomQueue                        // using for storing overloaded values from arduino
     {
-        Queue myQ;                  // based on default queue
-        uint size;                  // but with concrete size
-        
+        Queue bigQ;                  // big queue - based on default queue - for alarm
+        Queue smallQ;                  // small queue - based on default queue - for charting
+        uint big_size;                  // but with concrete size (big)
+        uint small_size;                  // but with concrete size (small)
+        float big_average;                  // keep current average of big queue values
+        float small_average;            // keep current average of small queue values
+
         //Constructors:
-        public CustomQueue(uint _size)
+        public CustomQueue(uint _bsize, uint _ssize)
         {
-            size = _size;
-            myQ = new Queue();
+            big_size = _bsize;
+            small_size = _ssize;
+            bigQ = new Queue();
+            smallQ = new Queue();
         }
 
         public void Add(int val)            // methods to adding data to queue
         {
-            while (myQ.Count>size)
+            int big_temp = 0;
+            int small_temp = 0;
+            while (bigQ.Count>big_size)
             {
-                myQ.Dequeue();
+                bigQ.Dequeue();
             }
-            if (myQ.Count == size) myQ.Dequeue();
-            myQ.Enqueue(val);
+            while (smallQ.Count > small_size)
+            {
+                smallQ.Dequeue();
+            }
+            if (bigQ.Count == big_size) big_temp = (int)bigQ.Dequeue();
+            if (smallQ.Count == small_size) small_temp = (int)smallQ.Dequeue();
+            bigQ.Enqueue(val);
+            smallQ.Enqueue(val);
+            big_average = big_average + (val - big_temp) / bigQ.Count;
+            small_average = small_average + (val - small_temp) / smallQ.Count;
         }
 
-        public float Averange()                 // calculate averange based on all values in queue
+        public float BigAverage()                 // calculate averange based on all values in queue
         {
-            int sum = 0;
-            foreach (int obj in myQ)
-                sum += obj;
-            return sum / size;
+            return big_average;
+        }
+
+        public float SmallAverage()                 // calculate averange based on all values in queue
+        {
+            return small_average;
         }
 
         public Queue SyncQ()                        // method for copying queue for threads
         {
-            return Queue.Synchronized(myQ);
+            return Queue.Synchronized(bigQ);
         }
 
 

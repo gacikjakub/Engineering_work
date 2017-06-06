@@ -6,7 +6,7 @@ Servo servo1;
 Servo servo2;
 int counter1 = 0;   // keep quantity of non-overloaded values in succession for servo1
 int counter2 = 0;   // keep quantity of non-overloaded values in succession for servo2
-const int marginOfError = 12;
+const int marginOfError = 16;
 const String secretCode = "I am GOD";  // It's a Password for initialize connection with PC
 int InitI = 0;
 
@@ -14,6 +14,15 @@ String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
  
 uint16_t diffval1,diffval2;    // keep value from differential voltage measurment 
+
+void detachServo(Servo& s) {
+  s.detach();
+}
+
+
+void attachServo(Servo& s,int i) {
+  s.attach(i);
+}
 
 uint16_t do_adc() {    // defintion of read function
   ADCSRA |= (1<<ADSC); //Start an ADC conversion by setting the ADSC bit.
@@ -50,6 +59,10 @@ bool setServo_measure(){         //set servo based on incoming data
         adc1();
         inputString.remove(0,3);        //removing "S1:"  to get only value
         delay(1);
+        if (inputString=="F")detachServo(servo1);  
+          else
+          if (inputString=="T") attachServo(servo1,2);
+          else
         servo1.write(inputString.toInt());
         diffval1 = do_adc();
       } else
@@ -58,6 +71,10 @@ bool setServo_measure(){         //set servo based on incoming data
         adc2();
         inputString.remove(0,3);          //removing "S2:"  to get only value
         delay(1);
+        if (inputString=="F")detachServo(servo2);  
+          else
+          if (inputString=="T") attachServo(servo2,3);
+          else
         servo2.write(inputString.toInt());
         diffval2 = do_adc();
       }
@@ -128,7 +145,6 @@ void initialize() {
     if (stringComplete) {    // check if incoming word is complete  (end by \n)
           if (!(inputString.equals(secretCode))) {
         inputString = "";
-        Serial.println("IN");
         stringComplete = false;
         initialize();
       }    
@@ -137,7 +153,7 @@ void initialize() {
 }
 
 void setup() {
-  Serial.begin(9600); // initialize serial communication at 9600 bits per second:
+  Serial.begin(230400); // initialize serial communication at 9600 bits per second:
   initialize();
   Serial.println(InitI);
   initdiff();   // run initialization fucntion

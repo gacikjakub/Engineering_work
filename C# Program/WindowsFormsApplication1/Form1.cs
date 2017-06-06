@@ -13,6 +13,7 @@ namespace ServoMonitoring_with_Control
         delegate void SetTextCallback(Label l, ProgressBar pb, string val);
         delegate void SetTextCallback2(Label lb, string text);
         delegate void SetChartPoint(Chart ch, String series, float val);
+        delegate void SetAlarmVisibility(Label l, Boolean b);
 
         // Variables and Consts
         ArduinoConnection ArduinoDevice;   // To Connect with Board with servos
@@ -29,8 +30,8 @@ namespace ServoMonitoring_with_Control
         {
             InitializeComponent();
             ValPerSec = 1000 / NewValInterval;
-            Servo1Que = new CustomQueue(30);
-            Servo2Que = new CustomQueue(30);
+            Servo1Que = new CustomQueue(20,10);
+            Servo2Que = new CustomQueue(20,10);
             CountingStatus = false;
             ArduinoDevice = new ArduinoConnection("I am GOD", this);
             CountingThread = new Thread(new ThreadStart(this.CreateCountingThread));
@@ -61,8 +62,9 @@ namespace ServoMonitoring_with_Control
                 {
                    Servo1Que.Add(int.Parse(this.label4.Text));      // .. add it to que ...
                    Servo2Que.Add(int.Parse(this.label7.Text));
-                    SetChart(chart1, "Series1", Servo1Que.Averange());    // .. and add averange from que to chart
-                    SetChart(chart2, "Series1", Servo2Que.Averange());
+                    SetChart(chart1, "Series1", Servo1Que.SmallAverage());    // .. and add averange from que to chart
+                    SetChart(chart2, "Series1", Servo2Que.SmallAverage());
+                    servosProtection();
                     Thread.Sleep(NewValInterval);                           // here is interval
                 }
         }
@@ -84,7 +86,21 @@ namespace ServoMonitoring_with_Control
             }
         }
 
-        
+        //Set Visibility of label
+        private void SetLabelVisibility(Label l, Boolean b)
+        {
+            if (l.InvokeRequired)
+            {
+                SetAlarmVisibility d = new SetAlarmVisibility(SetLabelVisibility); //need delegate function
+                this.Invoke(d, new object[] { l, b});
+            }
+            else
+            {
+                l.Visible = b;
+            }
+        }
+
+
         // For setting Value in progressBar another function is required
         private void setProgressBar(ProgressBar pb, int Val)
         {
@@ -94,6 +110,34 @@ namespace ServoMonitoring_with_Control
             if (Val > 200) pb.ForeColor = Color.DarkGreen;                  // high above 500
             if (Val > 480) pb.ForeColor = Color.Red;
             pb.Style = ProgressBarStyle.Continuous;                         // is required for changing color
+        }
+
+        private void servosProtection()
+        {
+            float av1 = Servo1Que.BigAverage();
+            Boolean s1s = ArduinoDevice.Servo1Status;
+            if (av1 > 400 && s1s==true)
+            {
+                SetLabelVisibility(label11,true);
+                ArduinoDevice.DetachServo(1);
+            } else
+            if (av1 < 100 && s1s == false)
+            {
+                SetLabelVisibility(label11, false);
+                ArduinoDevice.AttachServo(1);
+            }
+            float av2 = Servo2Que.BigAverage();
+            Boolean s2s = ArduinoDevice.Servo2Status;
+            if (av2 > 400 && s2s == true)
+            {
+                SetLabelVisibility(label12, true);
+                ArduinoDevice.DetachServo(2);
+            } else
+            if (av2 < 100 && s2s == false)
+            {
+                SetLabelVisibility(label12, false);
+                ArduinoDevice.AttachServo(2);
+            }
         }
 
 
@@ -116,6 +160,7 @@ namespace ServoMonitoring_with_Control
         public void SetDiffVal1(string val)                         // this is the function used by other class to set value
         {                                                           // in concrete label and progressBar 
             SetDiffValue(this.label4, this.progressBar1, val);      // this solution is more safety
+            
         }
 
         public void SetDiffVal2(String val)
@@ -146,7 +191,7 @@ namespace ServoMonitoring_with_Control
             this.controllerSelector.Items.Add("MOUSE");
             for (int i=0; i< myJoystick.GetSticks().Length; i++)
             {
-                this.controllerSelector.Items.Add(myJoystick.GetStick(i));
+                this.controllerSelector.Items.Add(myJoystick.GetStick(i).Information.InstanceName);
             }
             
         }
@@ -225,7 +270,39 @@ namespace ServoMonitoring_with_Control
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            myJoystick.StopRefreshing();
+            if (controllerSelector.SelectedIndex == 0)
+            {
+                vScrollBar1.Visible = true;
+                hScrollBar1.Visible = true;
+                label5.Visible = true;
+                label6.Visible = true;
+            }
+            else
+            {
+                vScrollBar1.Visible = false;
+                hScrollBar1.Visible = false;
+                label5.Visible = false;
+                label6.Visible = false;
+                myJoystick.ChooseStick(controllerSelector.SelectedIndex - 1);
+                myJoystick.StartRefreshing();
+            }
+        }
 
+        private void label11_Click(object sender, EventArgs e)
+        {
+          
+                SetLabelVisibility(label11, false);
+                ArduinoDevice.AttachServo(1);
+           
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+            
+                SetLabelVisibility(label12, false);
+                ArduinoDevice.AttachServo(2);
+         
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)           // Horizontal Bar for controlling servo

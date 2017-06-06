@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +14,25 @@ namespace ServoMonitoring_with_Control
         private SerialPort Port;                // Serial Port for communication
         private Boolean ReadStatus;             // Resume or Pause reading data
         private Thread ReadThread;              //  Reading data from device on another thread
+        private Thread WriteThread;              //  Writing data to device on another thread
         private String SecretCode;
+        public Boolean Servo1Status;               // True - servo Attach
+        public Boolean Servo2Status;               // False - servo Detach
+        private Boolean SendingStatus;
+        private Queue SendingQueue;
 
         Form Owner;                             // For modyfying labels and bars in window
+
+        private void SendMessage(String message)
+        {
+            SendingQueue.Enqueue(message);
+            /*while (SendingStatus) { ExtensionMethods.Wait(5); }
+            SendingStatus = true;
+            Port.WriteLine(message);
+            ExtensionMethods.Wait(10);
+            SendingStatus = false;
+            */
+        }
 
         //Constructior:
         public ArduinoConnection(String  code, Form frm)
@@ -27,6 +43,7 @@ namespace ServoMonitoring_with_Control
             Port = new SerialPort();        
             Port.BaudRate = 9600;           // BuadRate in transmission
             int timeout = Port.ReadTimeout;
+            SendingQueue = new Queue();
             Port.ReadTimeout = 30;
             SecretCode = code + '\r';
             string[] ports = SerialPort.GetPortNames();
@@ -38,7 +55,7 @@ namespace ServoMonitoring_with_Control
                 try
                 {
                     Port = new SerialPort();
-                    Port.BaudRate = 9600;           // BuadRate in transmission
+                    Port.BaudRate = 230400;           // BuadRate in transmission
                     Port.PortName = port1;        // "COM__"
                     Port.ReadTimeout = 1000;
                     Port.Open();                    // Opening Port             
@@ -81,9 +98,15 @@ namespace ServoMonitoring_with_Control
             {
                 ReadStatus = false;             // Stop reading data on start
                 ReadThread = new Thread(new ThreadStart(this.CreateReadThread));        //Initialize the tread
+                WriteThread = new Thread(new ThreadStart(this.CreateWriteThread));        //Initialize the tread
                 ReadThread.IsBackground = true;                     // Thread is closing with closing form
+                WriteThread.IsBackground = true;                     // Thread is closing with closing form
+                WriteThread.Start();
                 Port.ReadTimeout = timeout;
-                
+                Servo1Status = true;
+                Servo2Status = true;
+                SendingStatus = true;
+
             } else
             {
                 MessageBox.Show("Device couldn't pair with PC",
@@ -106,7 +129,7 @@ namespace ServoMonitoring_with_Control
         {
             try
             {
-                Port.WriteLine("Exit");
+                SendMessage("Exit");
                 System.Environment.Exit(Environment.ExitCode);
                 Application.ExitThread();
                 Application.Exit();
@@ -120,31 +143,62 @@ namespace ServoMonitoring_with_Control
             }
         }
 
-        private void CreateReadThread ()            // Thread to capturing darta
+        private void CreateWriteThread ()            // Thread to capturing darta
         {
             while (true)
-            while (ReadStatus)
+            while (SendingStatus)
             {
-                String data = Port.ReadLine();          // write received line to var
-                    if(data.Contains("D1:"))            // when line is beginig by "D1" it concerns servo1
+                    if (SendingQueue.Count != 0) Port.WriteLine((String)SendingQueue.Dequeue());
+                     Thread.Sleep(2);    
+            }
+             
+        }
+
+        private void CreateReadThread()            // Thread to capturing darta
+        {
+            while (true)
+                while (ReadStatus)
+                {
+                    String data = Port.ReadLine();          // write received line to var
+                    if (data.Contains("D1:"))            // when line is beginig by "D1" it concerns servo1
                     {
                         ((Form1)Owner).SetDiffVal1(data.Substring(3));          // show overload value in form without  "D1:"
-                    } else
+                    }
+                    else
                     if (data.Contains("D2:"))           // when line is beginig by "D2" it concerns servo2
                     {
                         ((Form1)Owner).SetDiffVal2(data.Substring(3));           // show overload value in form  without  "D2:"
                     }
                     Thread.Sleep(10);
-            }
-             
+                }
+
+        }
+
+        public void DetachServo(int num)
+        {
+            SendMessage("S" + num.ToString() + ":F");
+            if (num == 1) Servo1Status = false;
+            if (num == 2) Servo2Status = false;
+        }
+
+
+        public void AttachServo(int num)
+        {
+            SendMessage("S" + num.ToString() + ":T" );
+            if (num == 1) Servo1Status = true;
+            if (num == 2) Servo2Status = true;
         }
 
         
 
         public void SetServo(int num, int pos)              // method for set servo in arduino, type in Numer of servo and position
         {
-            Port.WriteLine("S" + num.ToString() + ":" + pos.ToString());            
-          //  System.Console.WriteLine("S" + num.ToString() + ":" + pos.ToString());     // DEBUG
+            if (num == 1 & Servo1Status == true)
+            SendMessage("S1:" + pos.ToString());  
+            else
+               if (num == 2 & Servo2Status == true)
+                SendMessage("S2:" + pos.ToString());
+            //  System.Console.WriteLine("S" + num.ToString() + ":" + pos.ToString());     // DEBUG
         }
 
        

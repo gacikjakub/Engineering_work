@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{enumerate}
 \usepackage{textcomp}
+\usepackage{float}
 \usepackage[svgnames]{xcolor}
 \lstset{language=C,
 	keywordstyle=\color{RoyalBlue},
@@ -153,6 +154,19 @@ w jêzyku C\#. Jest to obiektowy jêzyk programowania zaprojektowany dla firmy Mic
 kompilowane do jêzyka CIL (Common Intermediate Language) - jest to kod poœrednicz¹cy, który do wykonania wymaga œrodowiska 
 uruchomieniowego np. .NET Framework. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=13cm]{../Grafiki/caly_uklad.png}
+	\caption{Schemat opracowanego uk³adu umo¿liwiaj¹cego pomiary przeci¹¿eñ serwa}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{../Grafiki/caly_schemat.png}
+	\caption{Schemat blokowy prezentuj¹cy dzia³anie uk³adu}
+\end{figure}
+
+
 \chapter{Opis wybranych technologii}
 \section{Czym s¹ serwa ? - zasada dzia³ania i ich specyfikacja }
 
@@ -171,24 +185,39 @@ Do sterowania serwami wykorzystywany jest sygna³ PWM (Pulse-Width Modulation) - 
 pr¹du o sta³ej amplitudzie i czêstotliwoœci, natomiast zmianie ulega wype³nienie. Czêstotliwoœæ tego sygna³u 
 w serwach analogowych, jakim jest SG90, to ok. 50 Hz. W serwach cyfrowych jest to 300 Hz i takie serwa maj¹ wiêksz¹ precyzjê.
 Dziêki tranzystorom wbudowanym w mikrokontroler ATmega oraz funkcjom wbudowanym w Arduino wytworzenie takiego sygna³u
-jest bardzo proste - inicjujemy go wartoœci¹ jednobajtow¹ czyli z zakresu 0-255 odpowiadaj¹ce brakowi i pe³nemu wype³nieniu (100\%) przebiegu. Wykorzystuj¹c podane wy¿ej dane
+jest bardzo proste - inicjowany jest wartoœci¹ jednobajtow¹ czyli z zakresu 0-255 odpowiadaj¹ce brakowi i pe³nemu wype³nieniu (100\%) przebiegu. Wykorzystuj¹c podane wy¿ej dane
 ³atwo bêdzie zrozumieæ poni¿szy przyk³ad:
 Przy czêstotliwoœci 50 Hz wykonywanych jest 50 zmian sygna³u w ci¹gu sekundy, czas trwania sygna³u po zmianie to
 oko³o 20 ms. Sygna³ jest inicjowany wartoœci¹ 128 - oko³o po³owy z dostêpnego zakresu. W rezultacie na wyjœciu zostaje
-otrzymany cykliczny sygna³, gdzie na przemian w odcinkach 20 ms wystêpuje 5 V i 0 V. rednio jest to odpowiednik 50\% dostêpnego zakresu napiêæ.
+otrzymany cykliczny sygna³, gdzie na przemian w odcinkach 20 ms wystêpuje 5 V i 0 V. Œrednio jest to odpowiednik 50\% dostêpnego zakresu napiêæ.
  
-\begin{center}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=10cm]{../Grafiki/PWM.jpg}
-\end{center}
+	\caption{Wykres prezentuj¹cy sygna³ PWM - napiêcie od czasu }
+\end{figure}
+ 
+
+Dopiero w serwie, za pomoc¹ filtra dolnoprzepustowego, sygna³ ten jest uœredniany na napiêcie z zakresu 0-5V odpowiadaj¹ce procentowemu wype³nieniu przebiegu.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6cm]{../Grafiki/filtr_doln.png}
+	\caption{Schemat filtra dolnoprzepustowego }
+\end{figure}
+
 
 \indent Do przek³adni przymocowany jest potencjometr, który obraca siê wraz z jej obrotem. Zmiana rezystancji
  jest informacj¹ o aktualnym po³o¿eniu serwa. W oparciu o dzielnik napiêcia powstaje sygna³ napiêciowy, który trafia do komparatora, gdzie jest porównywany z podanym
 napiêciem wzorcowym (sygna³em steruj¹cym PWM). Wytworzony w komparatorze sygna³ to informacja o ró¿nicy pomiêdzy aktualn¹ pozycj¹
 silnika, a pozycj¹ zadan¹. Ta informacja trafia do korektora, a jego zadaniem jest obrócenie silnika tak, aby zmniejszyæ
 ró¿nicê w pozycjach, a¿ do uzykania po¿¹danego efektu.
-\begin{center}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=13cm]{../Grafiki/BlokScheme.png}
-\end{center}
+	\caption{Schemat blokowy opisuj¹cy dzia³anie serwa}
+\end{figure}
+
 Serwomechanizmy dzielimy na grupy, a podzia³ ten jest realizowany ze wzglêdu na wagê oraz materia³y,
 z których jest wykonane serwo. W opisywanym projekcie wykorzystywane serwa to SG90 firmy Tower Pro. 
 Jest to serwo z grupy micro, czyli o wadze do 10 gram oraz o plastikowych przek³adniach zêbatych. 
@@ -211,9 +240,13 @@ Dok³adna specyfikacja wykorzystywanego serwa Tower Pro SG90 :
 	\item Masa: 9 g	
 \end{itemize}
 
-\begin{center}
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=4cm]{../Grafiki/SG90.jpg}
-\end{center}
+	\caption{Serwo Tower Pro SG90}
+\end{figure}
+
 
 \section{Pomiar ró¿nicowy - na czym polega ? Przewaga nad innymi rozwi¹zaniami }
 
@@ -225,15 +258,22 @@ jest zastosowanie rezystora bocznikuj¹cego w obwodzie zasilania serwa oraz wykon
 
 Ró¿nicowy pomiar napiêcia polega na pod³¹czeniu dwóch bezpoœrednich koñców badanego elementu do wzmacniacza operacyjnego,
 a dopiero napiêcie wyjœciowe wzmacniacza trafia bezpoœrednio do przetwornika ADC (Analog-\(>\)Digital Converter).
-\begin{center}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=7cm]{../Grafiki/compADC.png}
-\end{center}	
+	\caption{Schemat po³¹cznia badanego elementu z przetwornikiem}
+\end{figure}
+
+	
 Zalet¹ tego rozwi¹zania jest odpornoœæ na ewentualne szumy, poniewa¿ przewody po³¹czeniowe s¹ blisko siebie,
 s¹ tej samej jakoœci i d³ugoœci, a wiêc posiadaj¹ ten sam opór oraz zewnêtrzne oddzia³ywania wp³ywaj¹ tak samo na oba przewody,
 czyli ró¿nica napiêæ w nich panuj¹cych bêdzie taka sama niezale¿nie od zaburzeñ zewnêtrznych. 
-\begin{center}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=12.5cm]{../Grafiki/DiffNoise.jpg}
-\end{center}
+	\caption{Wykres prezentuj¹cy wyniki pomiaru ró¿nicowego, kiedy wystêpuj¹ szumy}
+\end{figure}
+
 
 Innym mo¿liwym rozwi¹zaniem problemu jest rozebranie serwa i pod³¹czenie siê do sygna³u z potencjometru lub komparatora,
 odpowiednia analiza w mikrokontrolerze i interakcja. Jednak w tym przypadku przeci¹¿enie mo¿na mierzyæ tylko na podstawie
@@ -249,15 +289,19 @@ projektu rozwi¹zanie polegaj¹ce na ró¿nicowym pomiarze napiêcia wydaje siê byæ j
 
 Jak opisano w rodziale 2.2 pomiar ró¿nicowy wykonywany jest na elemencie elektronicznym - w tym przypadku jest to 
 rezystor bocznikuj¹cy, czyli rezystor o bardzo ma³ej rezystancji i du¿ej precyzji przeznaczony do pomiaru du¿ych pr¹dów i nie 
-wprowadzaj¹cy znacz¹cych strat w uk³adzie. Takie rezystory wykorzystywane s¹ we wszelkiego rodzaju miernikach natê¿enia.
+wprowadzaj¹cy znacz¹cych strat w uk³adzie. Takie rezystory wykorzystywane s¹ we wszelkiego rodzaju miernikach natê¿enia. \cite{Elektronika}
 Na potrzeby projektu powsta³a p³ytka z prostym uk³adem umo¿liwiaj¹cym opisywane pomiary. Zastosowano rezystor bocznikuj¹cy 
 o oporze 0.1$\Omega$,
  który zosta³ pod³¹czony szeregowo z silnikiem. W trakcie wykonywania ruchów przez serwo,
 napiêcie na rezystorze roœnie. Dodatkowo w uk³adzie zastosowano kondensatory 10 $\mu$F 63V pod³¹czone równolegle miêdzy napiêciem
 a mas¹, aby zapewniæ odpornoœæ na szumy, iskrzenia silnika - silniki s¹ elementami indukcyjnymi
-\begin{center}
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=12cm]{../Grafiki/boardSchema.png}
-\end{center}
+	\caption{Schemat przygotowanego uk³adu umo¿liwiaj¹cego pomiary}
+\end{figure}
+
 
 \chapter{Program dla mikrokontrolera}
 \section{Œrodowisko ARDUINO }
@@ -270,11 +314,13 @@ oraz niezliczon¹ iloœæ wci¹¿ powstaj¹cych modu³ów poszerzaj¹cych funkcjonalnoœæ 
 siê konwerter USB\(<->\)RS-232(o napiêciach TTL), a twórcy udostêpniaj¹ proste œrodowisko programistyczne z wbudowanym kompilatorem dziêki czemu 
 szereg operacji wymaganych przy typowym programowaniu procesorów AVR sprowadza siê do napisania kodu, pod³¹czenia p³ytki
 do portu USB i klikniêcia przycisku 'PROGRAMUJ'. \\
-\indent Prostota obs³ugi i programowania wynika z wbudowanego bootloadera - programu ³aduj¹cego skompilowany kod u¿ytkownika do pamiêci FLASH mikrokontrolera
-
-\begin{center}
+\indent Prostota obs³ugi i programowania wynika z wbudowanego bootloadera - programu ³aduj¹cego skompilowany kod u¿ytkownika do pamiêci FLASH mikrokontrolera \cite{Arduino}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=5cm]{../Grafiki/arduino.png}
-\end{center}
+	\caption{Logo projektu ARDUINO}
+\end{figure}
+
 
 \section{ATmega 2560 - wzmacniacze ró¿nicowe }
 Spoœród p³ytek z rodziny Arduino (m.in. Uno, Leonardo, Yum, Nano, Micro, Mega) tylko model Mega posiada mikrokontroler 
@@ -288,11 +334,17 @@ równie¿ jest niewielki, czyli rozbie¿noœæ wartoœci okreœlaj¹ca czy serwo jest w 
 jest niewielka i musi byæ wzmocniona tak, aby odpowiada³a zakresowi dynamicznemu przetwornika ADC. Tu z pomoc¹ przychodzi wspomniany wzmacniacz ró¿nicowy, który
 dodatkowo ma mo¿liwoœæ wzmocnienia sygna³u  10 lub 200 razy co oznacza, ¿e powsta³a 
 ró¿nica jest wzmacniania i dopiero ta wartoœæ trafia do 10-bitowego przetwornika. Dok³adnoœæ pomiaru, w przypadku 
-wzmocnienia x200, wzrasta do 24 $\mu$V w przedziale 0-25 $mV$.  
-\begin{center}
+wzmocnienia x200, wzrasta do 24 $\mu$V w przedziale 0-25 $mV$.  \\
+\indent Przyk³ad wyliczenia $\Delta$U dla rezystancji opornika $R=0.1\Omega$ i pr¹du $I=0.005A$: \\
+$\Delta U = R \cdot I = 0.1\Omega \cdot 0.05A = 0.005V = 5mV$ 
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=12cm]{../Grafiki/BezWzmocnienia.jpg}\\
-	\includegraphics[width=12cm]{../Grafiki/ZWzmocnieniem.jpg}
-\end{center}
+\includegraphics[width=12cm]{../Grafiki/ZWzmocnieniem.jpg}
+	\caption{Wykresy prezentuj¹ce si³ê sygna³u ze wzmocnieniem i bez}
+\end{figure}
+
 
 Wy¿ej opisana operacja powoduje diametralne zwiêkszenie rozbie¿noœci miêdzy wartoœciami pr¹dów w ró¿ncyh stanach
 pracy serwomechanizmu. 
@@ -352,10 +404,13 @@ oczywiste logiczne pytanie: Dlaczego .NET C\# ?
 
 Sk³adnia programu pisanego w œrodowisku Arduino do z³udzenia przypomina sk³adniê C++ - jest to w³aœciwie C++ z dodanymi funkcjami do obs³ugi
 mikrokontrolera - dlatego dla zachowania jednolitoœci i prostego zrozumienia kodu naturalnym by³oby wybranie C++ dla napisania aplikacji komputerowej.
-Ponadto C\# posiada wiele wbudowanych modu³ów do transmisji szeregowej, rysowania wykresów i prostego tworzenia GUI, co znacznie u³atwia implementacjê.
-\begin{center}
+Ponadto C\# posiada wiele wbudowanych modu³ów do transmisji szeregowej, rysowania wykresów i prostego tworzenia GUI, co znacznie u³atwia implementacjê \cite{Csharp}.
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=7cm]{../Grafiki/CsharpLogo.png}
-\end{center}
+	\caption{Logo Microsoft Visual C\#}
+\end{figure}
+
 
 
 \section{Struktury u¿yte w aplikacji oraz wykrywanie przeci¹¿eñ serwomechanizmów }
@@ -426,20 +481,37 @@ do komputera wraz z zainstalowanymi sterownikami do urz¹dzenia, uruchomiæ aplika
 
 \chapter{Podsumowanie oraz przyk³ady wykorzystania projektu}
 
+Realizacja opisywanego projektu przebieg³a pomyœlnie - opracowano uk³ad i algorytm pozwalaj¹cy na odpowiednie sterowanie ramieniem robota zabezpieczaj¹c przy tym serwa przed przeci¹¿eniami. 
+Program alarmuje u¿ytkownika o zaistnia³ych, groŸnych przeci¹¿eniach - s¹ one rozró¿niane od przeci¹¿eñ powstaj¹cych przy zmianie pozycji serwa.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{../Grafiki/podsumowanie.png}
+	\caption{Wykresu prezentuj¹ce pozycjê serwa i wystêpuj¹ce przeci¹¿enia w czasie}
+\end{figure}
+
 Technologiê wykrywania przeci¹¿eñ opisan¹ w powy¿szej pracy, przy odpowiednim doborze parametrów czêœci elektronicznych, mo¿na zastosowaæ niemal w ka¿dym
 urz¹dzeniu wymagaj¹cym takiej kontroli, dlatego iloœæ zastosowañ jest praktycznie nieskoñczona. Mog¹ to byæ nie tylko serwa, ale równie¿ standardowe silniki,
 si³owniki, pompy itp. Do najbardziej oczywistych zastosowañ prezentowanego projektu nale¿y system poruszania siê i przesuwania przeszkód w eksploratorach
 obszarów czy ³azikach pozaziemskich - poruszanie siê na np. szeœciu koñczynach podobnych do  pajêczych jest du¿o bardziej odporne na utrudnienia terenu, ni¿
 ko³a czy g¹sienice. 
-\begin{center}
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=7cm]{../Grafiki/robo_spider.png}
-\end{center}
+	\caption{Przyk³adowy model robota, w którym mo¿na zastosowaæ serwa z pomiarem przeci¹¿eñ}
+\end{figure}
 
 Innym przyk³adem s¹ modele samolotów, w których uk³ad sterowania lotek czêsto realizowany jest za pomoc¹ serwomechanizmów. Silne opory powietrza mog¹ zniszczyæ
 mechanizm, a wiêc za pomoc¹ systemu u¿ytkownik dostanie ostrze¿enie o takiej mo¿liwoœci i sugestiê zaprzestania lotów.
 \begin{center}
-	\includegraphics[width=7cm]{../Grafiki/RC_Plane.jpg}
+
 \end{center}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm]{../Grafiki/RC_Plane.jpg}
+	\caption{Model samolotu, wymagaj¹cego serw do sterowania}
+\end{figure}
 
 Prototypy linii monta¿owych w fabrykach, a w³aœciwie ramion pracuj¹cych na linii to równie¿ przyk³ad, w którym wymagane jest kontrolowanie znacz¹cej liczby serw
 i silników. W przypadku awarii firma poniesie ogromne straty produkcyjne, jak równie¿ ucierpieæ mog¹ pracownicy obs³uguj¹cy maszyny - odpowiedni system mo¿e 
@@ -456,13 +528,20 @@ W pracy wykorzystano informacje i wiedzê z zakresu:
 
 \begin{thebibliography}{10}
 
-\bibitem{C\#} I. Griffiths, M. Adams, J. Liberty, {\it C\#. Programowanie. Wydanie VI}, Helion, 2012 % Universitext to nazwa serii wydawniczej. Jeœli
-% ksi¹¿ka nie by³a wydana w ramach serii to to pole siê pomija.
+\bibitem{Elektronika} B.M. Oliver, J.M. Cage, {\it Pomiary i przyrz¹dy elektroniczne}, Wydawnictwa Komunikacji i £¹cznoœci, Warszawa 1978 
+
+\bibitem{Arduino} https://www.arduino.cc/
 
 \bibitem{ATmega2560} {\it Atmel ATmega640/V-1280/V-1281/V-2560/V-2561/V DATASHEET},
 \\Atmel Corporation, 2014
 
-\bibitem{Arduino} https://www.arduino.cc/
+\bibitem{Csharp} I. Griffiths, M. Adams, J. Liberty, {\it C\#. Programowanie. Wydanie VI}, Helion, 2012 % Universitext to nazwa serii wydawniczej. Jeœli
+% ksi¹¿ka nie by³a wydana w ramach serii to to pole siê pomija.
+
+
+
+
+
 
 \end{thebibliography}
 

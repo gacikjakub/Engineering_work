@@ -15,7 +15,6 @@
   <graph edgedefault="directed" id="G">
     <data key="d0"/>
     <node id="n0">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="117.0" width="246.0" x="305.00000000000006" y="58.0"/>
@@ -33,14 +32,13 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="117.0" width="246.0" x="305.00000000000006" y="315.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="172.744140625" x="36.6279296875" y="41.798828125">Czy prąd na potencjometrze
-jest równy prądowi na wejściu ?<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="176.095703125" x="34.9521484375" y="41.798828125">Czy napięcie na potencjometrze
+jest równe napięciu na wejściu ?<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -52,7 +50,6 @@ jest równy prądowi na wejściu ?<y:LabelModel>
       </data>
     </node>
     <node id="n2">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="117.0" width="246.0" x="305.00000000000006" y="468.0"/>
@@ -71,13 +68,12 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </node>
     <node id="n3">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="71.0" width="226.0" x="315.00000000000006" y="208.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="130.732421875" x="47.6337890625" y="26.1494140625">Przetórz sygnał na prąd<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="151.416015625" x="37.2919921875" y="26.1494140625">Przetórz sygnał na napięcie<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -89,7 +85,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </node>
     <node id="n4">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="71.0" width="185.0" x="96.5" y="491.0"/>
@@ -107,7 +102,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </node>
     <node id="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="71.0" width="185.0" x="-112.00000000000006" y="491.0"/>
@@ -125,7 +119,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </node>
     <edge id="e0" source="n0" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -144,7 +137,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e1" source="n3" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -155,7 +147,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e2" source="n1" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -178,7 +169,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e3" source="n1" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -197,7 +187,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e4" source="n2" target="n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -216,7 +205,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e5" source="n2" target="n5">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -238,7 +226,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e6" source="n4" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-239.00000000000006" ty="-76.04765508639986"/>
@@ -249,7 +236,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e7" source="n5" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-0.9259000000000697" ty="-75.5064771072">
@@ -262,7 +248,6 @@ jest większy od prądu na wejściu ?<y:LabelModel>
       </data>
     </edge>
     <edge id="e8" source="n0" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="123.03149414062494" sy="0.0" tx="240.28266000000048" ty="0.0">

@@ -32,6 +32,11 @@ namespace ServoMonitoring_with_Control
             
         }
 
+        public void ChooseStick(int i)
+        {
+            choosenStick = Sticks[i];
+        }
+
         public JoystickController()
         {
             Input = new DirectInput();
@@ -39,10 +44,9 @@ namespace ServoMonitoring_with_Control
             yValue = 0;
             zValue = 0;
             Sticks = LoadSticks();
-            if (Sticks.Length > 0) choosenStick = Sticks[0];
+            if (Sticks.Length > 0) choosenStick = Sticks[0]; 
             state = new JoystickState();
             StateRefresh = new Thread(new ThreadStart(this.RefreshingThread));
-            StartRefreshing();
         }
 
 
@@ -126,6 +130,7 @@ namespace ServoMonitoring_with_Control
                         {
                             OnChange();
                         }
+                        Thread.Sleep(5);
                     }
                 }
             }

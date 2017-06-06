@@ -16,7 +16,7 @@
    id="svg8"
    inkscape:version="0.92.1 r15371"
    sodipodi:docname="zbudowany układ.svg"
-   inkscape:export-filename="C:\Users\Kuba\Desktop\zbudowany układ.png"
+   inkscape:export-filename="C:\Users\Kuba\Desktop\Engineering_work\Praca pisemna\Grafiki\boardSchema.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -28,17 +28,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="338.9277"
-     inkscape:cy="205.37595"
+     inkscape:zoom="1.61"
+     inkscape:cx="370.76614"
+     inkscape:cy="180.53123"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-grids="true"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-width="1846"
+     inkscape:window-height="1053"
+     inkscape:window-x="1911"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      width="10000000mm"
      borderlayer="true" />
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -645,5 +645,111 @@
          y="272.43936"
          style="stroke-width:0.2128509px"
          id="tspan8954-38" /></text>
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923"
+       cx="43.713768"
+       cy="225.67754"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9"
+       cx="43.549431"
+       cy="217.46066"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-3"
+       cx="43.220757"
+       cy="277.27951"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-7"
+       cx="43.385094"
+       cy="292.06989"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-8"
+       cx="92.193321"
+       cy="217.46066"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-0"
+       cx="92.193321"
+       cy="225.84187"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-4"
+       cx="92.028984"
+       cy="277.11517"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-1"
+       cx="92.028984"
+       cy="292.39856"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-9"
+       cx="140.67288"
+       cy="277.27951"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06510743;stroke-miterlimit:4;stroke-dasharray:0.13021488, 0.26042976;stroke-dashoffset:0;stroke-opacity:1"
+       id="path923-9-03"
+       cx="140.17987"
+       cy="226.00621"
+       rx="1.6433749"
+       ry="1.4790378" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.36919212px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.13422979"
+       x="47.229263"
+       y="235.82333"
+       id="text999"
+       transform="scale(0.94145482,1.0621859)"><tspan
+         sodipodi:role="line"
+         id="tspan997"
+         x="47.229263"
+         y="235.82333"
+         style="stroke-width:0.13422979">10μC</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.3691926px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.13422981"
+       x="150.00328"
+       y="236.50487"
+       id="text999-5"
+       transform="scale(0.94145479,1.0621859)"><tspan
+         sodipodi:role="line"
+         id="tspan997-3"
+         x="150.00328"
+         y="236.50487"
+         style="stroke-width:0.13422981">10μC</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.3691926px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.13422981"
+       x="98.858093"
+       y="236.19545"
+       id="text999-1"
+       transform="scale(0.94145479,1.0621859)"><tspan
+         sodipodi:role="line"
+         id="tspan997-1"
+         x="98.858093"
+         y="236.19545"
+         style="stroke-width:0.13422981">10μC</tspan></text>
   </g>
 </svg>
