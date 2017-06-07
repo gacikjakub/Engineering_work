@@ -130,7 +130,7 @@ namespace ServoMonitoring_with_Control
                         {
                             OnChange();
                         }
-                        Thread.Sleep(5);
+                        Thread.Sleep(7);
                     }
                 }
             }
