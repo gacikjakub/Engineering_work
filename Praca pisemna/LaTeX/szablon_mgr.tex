@@ -1,6 +1,6 @@
 
 \documentclass{amsbook}
-
+\usepackage{mathtools} % loads »amsmath«
 \usepackage{amssymb} % To pakiet z dodatkowymi symbolami matematycznymi
 \usepackage{polski} \usepackage[cp1250]{inputenc} % Te pakiety umo¿liwiaj¹ sk³adanie pracy w jêzyku polskim
 \usepackage{graphicx} % Ten pakiet umo¿liwia umieszczanie obrazków w tekœcie
@@ -422,16 +422,19 @@ jest zebranie informacji z pewnego odcinka czasu i obliczenie krocz¹cej œredniej
 Do zmagazynowania informacji nadchodz¹cych z mikrokontrolera wykorzystano zmodyfikowan¹ kolejkê FIFO - domyœlna kolejka zaimlememntowana w C\# jest oparta o listê
 wskaŸnikow¹, czyli teoretycznie o nieskoñczonej pojemnoœci i braku dostêpu do konkretnej liczby elemetnów wstecz. Spersonalizowana kolejka posiada konkretnie
 zdefiniowan¹ wielkoœæ, co oznacza, ¿e w przypadku przepe³nienia kolejki kolejny element nie zostanie bezpoœrednio dodany - wczeœniej zostanie skasowany 
-najstarszy element. Œredni¹ arytmetyczn¹ ostanich wartoœci mo¿na obliczyæ sumuj¹c wartoœci wszystkich przechowywanych elementów za pomoc¹ funckji $foreach$
-oraz podzieliæ otrzyman¹ wartoœæ przez g³êbokoœæ zdefiniowanej kolejki. Wielkoœæ ta jest zale¿na od szybkoœci nap³ywania danych z mikrokontrolera oraz 
-zamierzonej iloœci ostanich sekund, z których jest obliczana wspomniana œrednia.\\
+najstarszy element. Œredni¹ arytmetyczn¹ ostanich wartoœci mo¿na obliczyæ dodaj¹c do wczeœniej obliczonej œredniej wszystkich przechowywanych elementów iloraz $\frac{New\, sample - Oldest\, sample}{Deep\, of\, queue}$  - jest to tzw. œrednia krocz¹ca. Wielkoœæ ta jest zale¿na od szybkoœci nap³ywania danych z mikrokontrolera oraz 
+zamierzonej iloœci ostanich sekund, z których jest obliczana wspomniana œrednia.
 \begin{lstlisting}
-public float Average()   // calculate average based on all values in queue
+public void Add(int val)            // methods to adding data to queue
 {
-	int sum = 0;
-	foreach (int obj in myQ)
-	sum += obj;
-	return sum / size;
+int small_temp = 0;
+while (smallQ.Count > small_size)
+{
+smallQ.Dequeue();
+}
+if (smallQ.Count == small_size) small_temp = (int)smallQ.Dequeue();
+smallQ.Enqueue(val);
+small_average = small_average + (val - small_temp) / smallQ.Count;
 }
 
 \end{lstlisting}
@@ -463,11 +466,37 @@ Aplikacja komputerowa zosta³a napisana wykorzystuj¹c œrodowisko Visual Studio 20
 w "Visualowym ToolBoxie" jest Chart, czyli z jêzyka angielskiego "Wykres". Udostêpnia on  intuicyjny interfejs, w którym wystarczy wybraæ typ wykresu,
 typ linii ³¹cz¹cej punkty wykresu (np. spline), kolorystykê, legendê, a w trakcie dzia³ania programu dodawane s¹ wartoœci do aktualnego czasu i wpisywane w wykres. Dodatkowo za pomoc¹ 
 wbudowanej w klasê funckji wykres jest przeskalowywany wzglêdem osi Y dla lepszej czytelnoœci w przypadku d³u¿szego pojawiania siê podobnych wartoœci. 
-(wykresy z programu)
 
-Interwa³ czasowy z jakim wprowadzane s¹ dane do wykresu musi byæ równy interwa³owi z jakim przychodz¹ dane z mikrokontrolera, 
-a w³aœciwie z jakim dane wp³ywaj¹ do kolejki opisanej w rozdziale 5.2 tak, aby wprowadzane wartoœci nie dublowa³y siê oraz nie zosta³y pominiête.
-(byæ mo¿e fragment kodu)\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{../Grafiki/ProgramCharts.jpg}
+	\caption{Zrzut interfejsu programu. Na osi X oznaczane s¹ ostatnie próbki; na osi Y oznaczona jest wartoœæ przeci¹¿enia w jednostkach ADC}
+\end{figure}
+
+\indent Interwa³ czasowy z jakim wprowadzane s¹ dane do wykresu musi byæ równy interwa³owi z jakim przychodz¹ dane z mikrokontrolera, 
+a w³aœciwie z jakim dane wp³ywaj¹ do kolejki opisanej w rozdziale 5.2 tak, aby wprowadzane wartoœci nie dublowa³y siê oraz nie zosta³y pominiête.\\
+\begin{lstlisting}
+const int SecInChart = 7;       //  last seconds in charts
+const int NewValInterval = 20;      // Time interval in refreshing charts
+int ValPerSec;                  // is calculated based on const above
+ValPerSec = 1000 / NewValInterval;
+
+private void SetChart(Chart ch, String series, float val) 
+{
+	if (ch.InvokeRequired)
+	{
+		SetChartPoint d = new SetChartPoint(SetChart); //need delegate function
+		this.Invoke(d, new object[] { ch,series,val });
+	}
+	else
+	{
+		if (ch.Series[series].Points.Count >= SecInChart*ValPerSec)    // delete the oldest values from chart if is full
+		ch.Series[series].Points.RemoveAt(ch.Series[series].Points.Count - SecInChart * ValPerSec);
+		ch.Series[series].Points.AddY(val);     //  add new value
+		ch.ChartAreas[0].RecalculateAxesScale();    // recalculate for resizing chart
+	}
+}
+\end{lstlisting}
 
 \section{Wykorzystanie kontrolera gier do sterowania ramieniem  }
 
@@ -476,9 +505,19 @@ W tym celu wykorzystano otwartoŸród³owe API (Application Programming Interface) 
 pod platform¹ .NET, ale w tym przypadku pos³u¿y³o do oprogramowania kontrolerów do gier. Interfejs, który udostêpnia SlimDX, jest uniwersalny i implementacja
 jednego kodu pozwala na u¿ywanie ró¿nego typu kontrolerów do gier - joysticków, gamepadów, kierownic itd. Do u¿ycia wystarczy zaledwie pod³¹czyæ kontroler
 do komputera wraz z zainstalowanymi sterownikami do urz¹dzenia, uruchomiæ aplikacjê i spoœród listy dostêpnych urz¹dzeñ wybraæ to interesuj¹ce. 
-(screen z aplikacji z podkreœlniem opcji wyboru)
-(tu byæ mo¿e oopiszê mój kontroler z ma³¹ instrukcj¹ obs³ugi)
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{../Grafiki/ChooseOption.jpg}
+	\caption{Zrzut interfejsu programu z wyszczególnieniem opcji wyboru urz¹dzenia steruj¹cego}
+\end{figure}
 
+\indent Do prac nad wykorzystaniem kontrolera do gier jako urz¹dzenia steruj¹cego u¿yto wiekowego, bezprzewodowego Joysticka firmy Rockfire model RF-626u 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6cm]{../Grafiki/Rockfire.jpg}
+	\caption{Wykorzystany kontroler do gier - RockFire RF-626u}
+\end{figure}
 \chapter{Podsumowanie oraz przyk³ady wykorzystania projektu}
 
 Realizacja opisywanego projektu przebieg³a pomyœlnie - opracowano uk³ad i algorytm pozwalaj¹cy na odpowiednie sterowanie ramieniem robota zabezpieczaj¹c przy tym serwa przed przeci¹¿eniami. 
@@ -524,6 +563,19 @@ W pracy wykorzystano informacje i wiedzê z zakresu:
 	\item \textbf{programowania GUI} (C\#, œrednie krocz¹ce, HIDy, grafika, obs³uga portów szeregowych)
 	\item \textbf{mechaniki} (budowa serwomechanizmów, ramion robota itp.)
 \end{itemize}
+
+\chapter*{Podziêkowania}
+Autor, pragnie z³o¿yæ ogromne wyrazy szacunku i podziêkowania swojego promotora
+Pana doktora Grzegorza Zuzla, który sprawowa³ pieczê poczynaniami w pracy licencjackiej. Twór ten nie by³by te¿ mo¿liwy bez pozosta³ych pracowników
+Zak³adu Doœwiadczalnej Fizyki Komputerowej z wyszczególnieniem Pana doktora Krzysztofa Pelczara. Ca³y ten sk³ad zaanga¿owa³ siê w rozwi¹zywanie napotkanych
+problemów i to w³aœnie dziêki nim prezentowana praca zosta³a ukoñczona. Podziêkowania nale¿¹ siê równie¿ Gara¿owi Z³o¿onoœci, który pomimo licznych 
+opracowywanych projektów udostêpni³ mi opisywany w pracy mikrokontoler nale¿¹cy do gara¿owego asortymentu. 
+
+\indent Przez okres ostatnich trzech lat autorowi by³o dane posi¹œæ ogromn¹ wiedzê, dlatego dziêkuje on wszystkim pracownikom wydzia³u, a zw³aszcza tym,
+którzy potrafili rozbudziæ w nim pasjê do rzeczy, o których wczeœniej nie mia³ pojêcia, i które pos³u¿¹ mu w przysz³oœci i wyró¿ni¹ go na rynku pracy. 
+Nie zabrn¹³by on do mniejsca, w którym aktuanie siê znajduje, gdyby nie dobrobyt i odpowiednie warunki do nauki, które zapewnili mu rodzice, dlatego z ca³ego
+serca dziêkuje równie¿ im i obiecuje, ¿e zawszê bêdzie pracowa³ tak, aby byli z niego dumni. 
+Autor jeszcze raz wszystkim ogromnie DZIÊKUJE.
 
 
 \begin{thebibliography}{10}
