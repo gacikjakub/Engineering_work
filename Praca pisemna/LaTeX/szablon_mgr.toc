@@ -3,8 +3,8 @@
 \contentsline {section}{\tocsection {}{1.1}{Budowa ramienia robota - za\IeC {\l }o\.zenia}}{5}
 \contentsline {section}{\tocsection {}{1.2}{Dob\'or podzespo\IeC {\l }\'ow i technologii}}{5}
 \contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{2}{Opis wybranych technologii}}{7}
-\contentsline {section}{\tocsection {}{2.1}{Czym s\k a serwa ? - zasada dzia\IeC {\l }ania i ich specyfikacja }}{7}
-\contentsline {section}{\tocsection {}{2.2}{Pomiar r\'o\.znicowy - na czym polega ? Przewaga nad innymi rozwi\k azaniami }}{10}
+\contentsline {section}{\tocsection {}{2.1}{Zasada dzia\IeC {\l }ania i specyfikacja serw}}{7}
+\contentsline {section}{\tocsection {}{2.2}{Pomiar r\'o\.znicowy, przewaga nad innymi rozwi\k azaniami }}{10}
 \contentsline {section}{\tocsection {}{2.3}{Przygotowany rezystor bocznikuj\k acy - dob\'or parametr\'ow cz\k e\'sci }}{11}
 \contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{3}{Program dla mikrokontrolera}}{13}
 \contentsline {section}{\tocsection {}{3.1}{\'Srodowisko ARDUINO }}{13}
