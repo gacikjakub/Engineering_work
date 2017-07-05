@@ -1,22 +1,23 @@
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{}{Wst\k ep}}{4}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{1}{Og\'olne przedstawienie problemu}}{5}
+\select@language {polish}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{}{Wst\k ep}}{4}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{1}{Og\'olne przedstawienie problemu}}{5}
 \contentsline {section}{\tocsection {}{1.1}{Budowa ramienia robota - za\IeC {\l }o\.zenia}}{5}
 \contentsline {section}{\tocsection {}{1.2}{Dob\'or podzespo\IeC {\l }\'ow i technologii}}{5}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{2}{Opis wybranych technologii}}{7}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{2}{Opis wybranych technologii}}{7}
 \contentsline {section}{\tocsection {}{2.1}{Zasada dzia\IeC {\l }ania i specyfikacja serw}}{7}
 \contentsline {section}{\tocsection {}{2.2}{Pomiar r\'o\.znicowy, przewaga nad innymi rozwi\k azaniami }}{10}
 \contentsline {section}{\tocsection {}{2.3}{Przygotowany rezystor bocznikuj\k acy - dob\'or parametr\'ow cz\k e\'sci }}{11}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{3}{Program dla mikrokontrolera}}{13}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{3}{Program dla mikrokontrolera}}{13}
 \contentsline {section}{\tocsection {}{3.1}{\'Srodowisko ARDUINO }}{13}
 \contentsline {section}{\tocsection {}{3.2}{ATmega 2560 - wzmacniacze r\'o\.znicowe }}{13}
 \contentsline {section}{\tocsection {}{3.3}{Transmisja szeregowa ARDUINO \(<=>\) PC oraz przyj\k ety protok\'o\IeC {\l } danych }}{15}
 \contentsline {section}{\tocsection {}{3.4}{Brak pomiaru r\'o\.znicowego w interfejsie programowym ARDUINO - dzia\IeC {\l }ania na rejestrach mikrokontrolera }}{15}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{4}{Aplikacja komputerowa GUI}}{17}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{4}{Aplikacja komputerowa GUI}}{17}
 \contentsline {section}{\tocsection {}{4.1}{Wyb\'or j\k ezyka programowania }}{17}
 \contentsline {section}{\tocsection {}{4.2}{Struktury u\.zyte w aplikacji oraz wykrywanie przeci\k a\.ze\'n serwomechanizm\'ow }}{17}
 \contentsline {section}{\tocsection {}{4.3}{Inicjalizacja po\IeC {\l }\k aczenia i sterowanie serwami - ci\k ag dalszy przyj\k etego protoko\IeC {\l }u danych}}{18}
 \contentsline {section}{\tocsection {}{4.4}{Prezentacja danych }}{19}
 \contentsline {section}{\tocsection {}{4.5}{Wykorzystanie kontrolera gier do sterowania ramieniem }}{20}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{5}{Podsumowanie oraz przyk\IeC {\l }ady wykorzystania projektu}}{22}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{}{Podzi\k ekowania}}{25}
-\contentsline {chapter}{\tocchapter {Rozdzia\PlPrIeC {\l }}{}{Bibliografia}}{26}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{5}{Podsumowanie oraz przyk\IeC {\l }ady wykorzystania projektu}}{22}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{}{Podzi\k ekowania}}{25}
+\contentsline {chapter}{\tocchapter {Rozdzia\l }{}{Bibliografia}}{26}
